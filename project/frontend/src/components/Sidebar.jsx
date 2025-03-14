@@ -30,7 +30,20 @@ const units = [
       }
     ]
   },
-
+    {
+    unitCode: "FIT3171",
+    unitName: "Databases",
+    classes: [{
+      cl_id: 123,
+      classType: "Seminar",
+      classDuration: "1hr",
+    },{
+      cl_id: 124,
+      classType: "Applied",
+      classDuration: "2hr",
+      }
+    ]
+  },
 
 ]
 
