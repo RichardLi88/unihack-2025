@@ -1,4 +1,4 @@
-import { Flex } from "@mantine/core";
+import { Flex, ScrollArea } from "@mantine/core";
 import Unit from "./Unit";
 const units = [
   {
@@ -61,9 +61,11 @@ function Sidebar() {
       h="100vh"
       py="20px"
     >
-      {units.map((unit) => {
-        return <Unit key={unit.unitCode} data={unit} />;
-      })}
+      <ScrollArea w="100%">
+        {units.map((unit) => {
+          return <Unit key={unit.unitCode} data={unit} />;
+        })}
+      </ScrollArea>
     </Flex>
   );
 }
