@@ -4,10 +4,12 @@ import Login from './pages/Login';
 import Planner from './pages/Planner';
 import { Route, Routes } from 'react-router';
 import HomePage from './pages/HomePage';
+import Navbar from './components/Navbar';
 function App() {
 
   return (
     <>
+      <Navbar/>
     <Routes>
         <Route path="/" element={<HomePage/>} />
         <Route path="/help" element={<Help/>} />
