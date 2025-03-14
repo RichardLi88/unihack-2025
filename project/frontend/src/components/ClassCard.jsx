@@ -1,7 +1,19 @@
-function ClassCard() {
+import { Flex,Text } from "@mantine/core";
+import styles from "../css/Sidebar.module.css"
+
+function ClassCard({data}) {
+
   return (
   <>
-      <div>ClassCard</div>
+    <Flex direction="row" bg ="orange" h="40px" mt="10px" w="70%" mx="5%" px="10px"  justify="space-between" align="center" className={styles['unit-card']}>
+      <Text size="l">
+          {data.classType}
+        </Text>
+      <Text size="sm">
+          {data.classDuration}
+        </Text>
+    </Flex>
+
     </>
   )
 }
