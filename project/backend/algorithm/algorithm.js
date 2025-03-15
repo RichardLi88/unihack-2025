@@ -2,8 +2,8 @@
 function hasConflict(c1, c2) {
   return (
     c1.day == c2.day &&
-    ((c2.start <= c1.start && c1.start < c2.end) ||
-      (c1.start <= c2.start && c2.start < c1.end))
+    ((c2.time <= c1.time && c1.time < c2.end) ||
+      (c1.time <= c2.time && c2.time < c1.end))
   );
 }
 
@@ -24,7 +24,7 @@ function isValidAllocation(allocated, selected, maxHoursPerDay) {
     return false;
   }
 
-  for (let assignedClass of Object.values(allocated)) {
+  for (const assignedClass of Object.values(allocated)) {
     if (hasConflict(assignedClass, selected)) {
       return false;
     }
@@ -53,7 +53,7 @@ function backtrack(allocations, classOfferings, maxHoursPerDay) {
 
   // get the most constrained variable (offering with fewest valid choices)
   let nextOffering = classOfferings
-    .filter((o) => !allocations[o.id])
+    .filter((co) => !allocations[co.id])
     .sort((a, b) => a.classes.length - b.classes.length)[0];
 
   for (let c of nextOffering.classes) {
@@ -84,12 +84,13 @@ function backtrack(allocations, classOfferings, maxHoursPerDay) {
  */
 function generateTimetable(offerings, maxHoursPerDay) {
   let classOfferings = [];
-  for (let o of offerings) {
+  for (const o of offerings) {
     for (let ct of o.classTypes) {
       for (let c of ct.classes) {
-        c.end = c.start + ct.duration * 100;
+        c.end = c.time + ct.duration * 100;
+        c.unitcode = o.unitcode;
       }
-      ct.id = o.code + ":" + ct.name; // e.g. FIT3159:workshop
+      ct.id = o.unitcode + ":" + ct.name; // "FIT3171:workshop"
       classOfferings.push(ct);
     }
   }
@@ -103,20 +104,22 @@ export default generateTimetable;
 //                TESTING!!!
 // ========================================
 
-import { getOfferingsFiltered } from "./algorithmBackend.js";
-import connectDB from "../database/db.js";
-import dotenv from "dotenv";
-dotenv.config();
-connectDB();
-
-let offerings = await getOfferingsFiltered(
-  // should filter out 2 workshops
-  { "TUE-15": true, "WED-16": true, "WED-18": true },
-  ["FIT3171", "FIT2004"],
-  2025,
-  1,
-);
-
-let soln = generateTimetable(offerings, 3);
-console.log("Solution:");
-console.log(soln);
+// import { getOfferingsFiltered } from "./algorithmBackend.js";
+// import connectDB from "../database/db.js";
+// import mongoose from "mongoose";
+// import dotenv from "dotenv";
+// dotenv.config();
+// connectDB();
+//
+// let offerings = await getOfferingsFiltered(
+//   // should filter out 2 workshops
+//   { "TUE-15": true, "WED-16": true, "WED-18": true },
+//   ["FIT3171", "FIT2004"],
+//   2025,
+//   1,
+// );
+//
+// let soln = generateTimetable(offerings, 3);
+// console.log(soln);
+//
+// mongoose.disconnect(process.env.MONGO_URI);
