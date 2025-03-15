@@ -1,9 +1,11 @@
 import { Button, Flex, ScrollArea } from "@mantine/core";
 import Unit from "./Unit";
 import { IconSparkles } from "@tabler/icons-react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PageContext } from "../contexts/PageContext";
 import PlannerFeatures from "./PlannerFeatures";
+import { UnitContext } from "../contexts/UnitContext";
+import { getAllClasses } from "../utility/fetchClasses";
 
 const units = [
   {
@@ -44,6 +46,15 @@ const colors = ["#64B5F6", "#81C784", "#FFD54F", "#E57373"]; // Light blue, gree
 
 function Sidebar() {
   const { edit } = useContext(PageContext);
+  const { units, getUnits } = useContext(UnitContext);
+
+  useEffect(() => {
+    async function getU() {
+      await getUnits();
+    }
+    getU();
+  }, []);
+
   return (
     <Flex
       direction="column"
@@ -56,7 +67,7 @@ function Sidebar() {
       <ScrollArea w="100%">
         {edit && <PlannerFeatures />}
         {units.map((unit, index) => {
-          return <Unit key={unit.unitCode} data={unit} color={colors[index]} />;
+          return <Unit key={index} data={unit} color={colors[index]} />;
         })}
       </ScrollArea>
     </Flex>

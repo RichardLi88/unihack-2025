@@ -4,27 +4,28 @@ import styles from "../css/Sidebar.module.css";
 import ClassModal from "./ClassModal";
 import { PageContext } from "../contexts/PageContext";
 import { IconCircleX, IconEdit } from "@tabler/icons-react";
+import { UnitContext } from "../contexts/UnitContext";
 
 function ClassCard({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleCardClick = () => {
     setIsModalOpen(true);
   };
-
-  const { edit, editUnit, setEditUnit, unitInfo, setUnitInfo } =
-    useContext(PageContext);
+  const { getUnits } = useContext(UnitContext);
+  const { edit, editUnit, setEditUnit, setUnitInfo } = useContext(PageContext);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
 
-  const handleActiveEdit = () => {
+  const handleActiveEdit = async () => {
     if (editUnit === data.cl_id) {
       setEditUnit(-1);
       setUnitInfo("");
     } else {
-      setEditUnit(data.cl_id);
-      setUnitInfo({ unitCode: data.unitCode, classType: data.classType });
+      setEditUnit(data._id);
+      setUnitInfo({ unitcode: data.unitCode, classType: data.name });
+      await getUnits();
     }
   };
 
@@ -51,8 +52,8 @@ function ClassCard({ data }) {
           onClick={handleCardClick}
           style={{ cursor: "pointer" }}
         >
-          <Text size="l">{data.classType}</Text>
-          <Text size="sm">{data.classDuration}</Text>
+          <Text size="l">{data.name}</Text>
+          <Text size="sm">{data.duration + "h"}</Text>
         </Flex>
 
         <ClassModal

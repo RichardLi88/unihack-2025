@@ -127,19 +127,7 @@ const Timetable = () => {
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
   const { editUnit, unitInfo } = useContext(PageContext);
-  const { units, setUnits } = useContext(UnitContext);
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        const data = await getAllClasses(10000000, 2025, 1);
-        setUnits(data);
-      } catch (err) {
-        console.log("error");
-      }
-    }
-    getData();
-  }, []);
+  const { units } = useContext(UnitContext);
 
   // Update the days array whenever the current week changes
   useEffect(() => {
@@ -254,7 +242,7 @@ const Timetable = () => {
         handleCellClick(
           { name: targetElement.dataset.day },
           parseInt(targetElement.dataset.hour, 10),
-          dragStartState
+          dragStartState,
         );
       }
     }
@@ -303,8 +291,8 @@ const Timetable = () => {
                 {hour <= 11
                   ? `${hour} AM`
                   : hour === 12
-                  ? "12 PM"
-                  : `${hour - 12} PM`}
+                    ? "12 PM"
+                    : `${hour - 12} PM`}
               </td>
               {days.map((day) => {
                 const cellKey = `${day.name}-${hour}`;
@@ -313,9 +301,8 @@ const Timetable = () => {
                 return (
                   <td
                     key={cellKey}
-                    className={`empty-slot ${
-                      isClicked && isClicked !== "class" ? "clicked" : ""
-                    } ${isClicked === "class" ? "class-time" : ""}`}
+                    className={`empty-slot ${isClicked && isClicked !== "class" ? "clicked" : ""
+                      } ${isClicked === "class" ? "class-time" : ""}`}
                     onMouseDown={(e) => handleMouseDown(day, hour, e)}
                     onMouseOver={() => handleMouseOver(day, hour, cellKey)}
                     onMouseUp={handleMouseUp}

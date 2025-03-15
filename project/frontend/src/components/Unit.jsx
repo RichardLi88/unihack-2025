@@ -5,6 +5,7 @@ import { useState } from "react";
 
 function Unit({ data, color }) {
   const [visible, setVisible] = useState(true);
+  console.log(data);
 
   return (
     <Flex direction="column" w="100%" align="center" my="15px">
@@ -29,11 +30,11 @@ function Unit({ data, color }) {
             w="100%"
             style={transitionStyles}
           >
-            {data.classes.map((c) => {
+            {data.classTypes.map((c) => {
               return (
                 <ClassCard
-                  key={c.cl_id}
-                  data={{ ...c, unitCode: data.unitCode }}
+                  key={c._id}
+                  data={{ ...c, unitcode: data.unitcode }}
                 />
               );
             })}
