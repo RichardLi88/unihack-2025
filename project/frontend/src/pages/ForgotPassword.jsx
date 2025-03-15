@@ -1,53 +1,37 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
-import animationData from "../assets/login-animation.json";
-import "../css/Login.css";
+import animationData from "../assets/fpassword-animation.json";
+import "../css/Login.css"; 
 
-export default function Login() {
+function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleResetPassword = (e) => {
     e.preventDefault();
-    setError("");
+    setMessage("");
 
-    if (!email || !password) {
-      setError("Both fields are required");
+    if (!email) {
+      setMessage("Please enter your email.");
       return;
     }
-
-    if (email === "user@example.com" && password === "password123") {
-      alert("Login successful!");
-    } else {
-      setError("Invalid email or password");
-    }
-  };
-
-  const handleForgotPassword = () => {
-    window.location.href = "/ForgotPassword.jsx";
+    
+    setMessage("A password reset link has been sent to your email.");
   };
 
   return (
     <motion.div 
-      className="login-container"
+      className="login-container forgot-password-container"
       initial={{ opacity: 0, y: -30 }} 
       animate={{ opacity: 1, y: 0 }} 
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <motion.h1 
-        className="login-title-main"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        Allocate++
-      </motion.h1>
-
-      <div className="login-content">
+      <div className="forgot-password-content">
         <motion.div
-          className="animation-container"
+          className="animation-container forgot-password-animation"
           initial={{ x: -50 }}
           animate={{ x: [0, 10, -10, 0] }} 
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -56,7 +40,7 @@ export default function Login() {
         </motion.div>
 
         <motion.div 
-          className="login-card"
+          className="login-card forgot-password-card"
           initial={{ scale: 0.9, opacity: 0 }} 
           animate={{ scale: 1, opacity: 1 }} 
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -67,29 +51,18 @@ export default function Login() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            Login
+            Forgot Password
           </motion.h2>
 
-          {error && <p className="error-message">{error}</p>}
-          <form onSubmit={handleLogin}>
+          {message && <p className="success-message">{message}</p>}
+          <form onSubmit={handleResetPassword}>
             <div className="form-group">
-              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
               />
             </div>
 
@@ -99,20 +72,22 @@ export default function Login() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Login
+              Send Reset Link
             </motion.button>
           </form>
 
           <motion.button 
             className="forgot-password-button"
-            onClick={handleForgotPassword}
+            onClick={() => navigate("/")}
             animate={{ y: [0, -5, 0] }} 
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            Forgot Password?
+            Back to Login
           </motion.button>
         </motion.div>
       </div>
     </motion.div>
   );
 }
+
+export default ForgotPassword;

@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { Text, Button, Menu, Flex, ActionIcon } from "@mantine/core";
-import { IconSettings, IconHelpCircle } from "@tabler/icons-react";
+import { IconSettings, IconHelpCircle, IconChevronDown } from "@tabler/icons-react";
 
 function Navbar() {
+  const [selectedSemester, setSelectedSemester] = useState("Semester 1");
+
   return (
     <Flex
       h={50}
@@ -14,26 +17,34 @@ function Navbar() {
       <Text size="lg" weight={500}>
         Allocate++
       </Text>
+
+      {/* Navbar Right Section - Items slightly closer spaced */}
       <Flex gap="md" align="center">
         <Button variant="subtle" color="gray.0">
-          Planner
+          Edit
         </Button>
+
+        {/* Semester Selection Dropdown */}
+        <Menu>
+          <Menu.Target>
+            <Button variant="subtle" color="gray.0" rightSection={<IconChevronDown size={14} />}>
+              {selectedSemester}
+            </Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item onClick={() => setSelectedSemester("Semester 1")}>Semester 1</Menu.Item>
+            <Menu.Item onClick={() => setSelectedSemester("Semester 2")}>Semester 2</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+
+        {/* Help and Settings Icons */}
         <ActionIcon variant="subtle" color="gray.0" size="lg">
           <IconHelpCircle size={20} />
         </ActionIcon>
         <ActionIcon variant="subtle" color="gray.0" size="lg">
           <IconSettings size={20} />
         </ActionIcon>
-        <Menu>
-          <Menu.Target>
-            <Button variant="subtle" color="gray.0">
-              Period ▼
-            </Button>
-          </Menu.Target>
-        </Menu>
-        <Button variant="subtle" color="gray.0">
-          Home
-        </Button>
+
         <Button variant="subtle" color="gray.0">
           Logout
         </Button>
