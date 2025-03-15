@@ -24,7 +24,6 @@ async function getOffering(unitcode, year, semester) {
     { code: 1, "offerings.classTypes": 1 }, // only return class types
   ).lean();
   if (!unit.offerings) return null;
-
   const offering = unit.offerings[0];
   offering.unitcode = unitcode;
   return offering;
@@ -65,5 +64,4 @@ async function getOfferingsFiltered(
 
   return offerings;
 }
-
-export { getOfferingsFiltered, getOffering as getAllClassesForUnit };
+export { getOfferingsFiltered, getOffering };
