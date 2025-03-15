@@ -23,22 +23,28 @@ function isValidAllocation(allocated, selected) {
  * Inputs:
  * - allocations (map classTypeId:class): default {}
  * - offerings (array): [{offering, [classes{id, start, end}]}]
+ * - offerings (array):
+ *   [{
+ *     name,
+ *     duration,
+ *     classes: [ { id, day, start, end } ]
+ *   }]
  */
-function backtrack(allocations, offerings) {
+function backtrack(allocations, classOfferings) {
   // valid schedule found
-  if (Object.keys(allocations).length == offerings.length) {
+  if (Object.keys(allocations).length == classOfferings.length) {
     return allocations;
   }
 
   // get the most constrained variable (offering with fewest valid choices)
-  let nextOffering = offerings
+  let nextOffering = classOfferings
     .filter((o) => !allocations[o.id])
     .sort((a, b) => a.classes.length - b.classes.length)[0];
 
   for (let c of nextOffering.classes) {
     if (isValidAllocation(allocations, c)) {
       allocations[nextOffering.id] = c; // choose this class
-      let result = backtrack(allocations, offerings);
+      let result = backtrack(allocations, classOfferings);
       if (result) return result; // return if valid allocation
       delete allocations[nextOffering.id]; // backtrack if failed
     }
@@ -48,33 +54,69 @@ function backtrack(allocations, offerings) {
   return null;
 }
 
+function generateTimetable(offerings) {
+  let classOfferings = [];
+  for (let o of offerings) {
+    for (let ct of o.classTypes) {
+      for (let c of ct.classes) {
+        c.end = c.start + ct.duration * 100;
+      }
+      ct.id = o.unitcode + ":" + ct.name; // e.g. FIT3159:workshop
+      classOfferings.push(ct);
+    }
+  }
+
+  return backtrack({}, classOfferings);
+}
+
 // ========================================
 //                EXAMPLE!!!
 // ========================================
-//
+
 // let offerings = [
 //   {
-//     id: "Math",
-//     classes: [
-//       { id: "Math-1", day: "mon", start: 9, end: 10 },
-//       { id: "Math-2", day: "mon", start: 11, end: 12 },
+//     unitcode: "FIT3159",
+//     classTypes: [
+//       {
+//         name: "workshop",
+//         duration: 1,
+//         classes: [
+//           { id: 1, day: "mon", start: 900 },
+//           { id: 2, day: "mon", start: 1100 },
+//         ],
+//       },
+//       {
+//         name: "applied",
+//         duration: 1,
+//         classes: [
+//           { id: 3, day: "mon", start: 900 },
+//           { id: 4, day: "mon", start: 1000 },
+//         ],
+//       },
 //     ],
 //   },
 //   {
-//     id: "Physics",
-//     classes: [
-//       { id: "Physics-1", day: "mon", start: 9, end: 10 },
-//       { id: "Physics-2", day: "mon", start: 10, end: 11 },
-//     ],
-//   },
-//   {
-//     id: "Chemistry",
-//     classes: [
-//       { id: "Chem-1", day: "mon", start: 10, end: 11 },
-//       { id: "Chem-2", day: "mon", start: 11, end: 12 },
+//     unitcode: "FIT3077",
+//     classTypes: [
+//       {
+//         name: "workshop",
+//         duration: 1,
+//         classes: [
+//           { id: 1, day: "mon", start: 900 },
+//           { id: 2, day: "mon", start: 1100 },
+//         ],
+//       },
+//       {
+//         name: "applied",
+//         duration: 1,
+//         classes: [
+//           { id: 3, day: "tue", start: 900 },
+//           { id: 4, day: "tue", start: 1000 },
+//         ],
+//       },
 //     ],
 //   },
 // ];
 //
-// let solution = backtrack({}, offerings);
+// let solution = generateTimetable(offerings);
 // console.log(solution);
