@@ -4,6 +4,7 @@ import {
   getOfferingsFiltered,
 } from "../algorithm/algorithmBackend.js";
 import generateTimetable from "../algorithm/algorithm.js";
+import { UnitEnrolment } from "../schemas/unitEnrolmentSchema.js";
 
 export const getTimetable = async (req, res) => {
   try {
@@ -120,5 +121,55 @@ export const getGeneratedTimetable = async (req, res) => {
     return res
       .status(500)
       .json({ success: false, error: "Server error", data: err.message });
+  }
+};
+
+/**
+ * Requires `req.body.timetable`, to be in the format:
+ * { unitcode: [ class_id1, class_id2 ], ... }
+ */
+export const saveTimetable = async (req, res) => {
+  try {
+    const { studentId, year, semester } = req.params;
+    const { timetable } = req.body;
+    const yearNum = parseInt(year, 10);
+    const semesterNum = parseInt(semester, 10);
+
+    const student = await Student.findOne({ stuid: studentId });
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Find the semester enrolment
+    const semesterIndex = student.semesterEnrolment.findIndex(
+      (sem) => sem.year === yearNum && sem.semester === semesterNum,
+    );
+
+    if (semesterIndex === -1) {
+      return res.status(404).json({ message: "Semester enrolment not found" });
+    }
+
+    // create new UnitEnrolment object
+    const unitEnrolments = [];
+    for (const ucode of Object.keys(timetable)) {
+      const unitEnrolment = new UnitEnrolment();
+      unitEnrolment.unitcode = ucode;
+      for (const c of timetable[ucode]) {
+        unitEnrolment.classes.push(c);
+      }
+      unitEnrolments.push(unitEnrolment);
+    }
+
+    student.semesterEnrolment[semesterIndex].unitEnrolment = unitEnrolments;
+    await student.save();
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Timetable updated successfully" });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ success: false, error: "Server error", data: err });
   }
 };
