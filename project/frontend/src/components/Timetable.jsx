@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/Timetable.css"; // Ensure your CSS is updated as well
+import "../css/Timetable.css"; 
 
 // Function to get the dates for the current week
 const getCurrentWeekDates = (startDate) => {
@@ -13,14 +13,12 @@ const getCurrentWeekDates = (startDate) => {
 };
 
 const formatDate = (date) => {
-  const day = String(date.getDate()).padStart(2, "0"); // Pad day with leading zero
-  const month = date.getMonth() + 1; // Months are zero-indexed
+  const day = String(date.getDate()).padStart(2, "0"); // Pad day with zero
+  const month = date.getMonth() + 1; 
   return `${day}/${month}`;
 };
 
-
-
-const hours = Array.from({ length: 14 }, (_, i) => 8 + i); // 8 AM to 9 PM
+const hours = Array.from({ length: 14 }, (_, i) => 8 + i); // 8AM to 9PM
 
 const Timetable = () => {
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); // Start of the current week (Monday)
