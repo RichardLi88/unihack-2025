@@ -8,13 +8,7 @@
     user-select: none;
 
   }
-  .week-header {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px; 
-    align-self: flex-start; /* Align the header to the left */
-    margin-left: 10%; /* Match the table's left margin */
-  }
+
   .timetable {
     border-collapse: collapse;
     width: 80%;
@@ -39,3 +33,27 @@
   .empty-slot.clicked {
     background-color: grey;
   }
+
+  .week-header {
+  display: flex;
+  
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 80%;
+}
+
+.week-header p {
+  background-color: #ffffff00;
+  border: 0cqh solid;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  padding-top: 10px;
+  
+}
+
+.week-header button:hover {
+  background-color: #e0e0e0;
+}

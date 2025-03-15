@@ -1,28 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/Timetable.css"; // Ensure your CSS is updated as well
 
-const days = [
-  { name: "Monday", date: "9/3" },
-  { name: "Tuesday", date: "10/3" },
-  { name: "Wednesday", date: "11/3" },
-  { name: "Thursday", date: "12/3" },
-  { name: "Friday", date: "13/3" },
-];
+// Function to get the dates for the current week
+const getCurrentWeekDates = (startDate) => {
+  const dates = [];
+  for (let i = 0; i < 5; i++) { // Only Monday to Friday
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + i);
+    dates.push(date);
+  }
+  return dates;
+};
+
+const formatDate = (date) => {
+  const day = String(date.getDate()).padStart(2, "0"); // Pad day with leading zero
+  const month = date.getMonth() + 1; // Months are zero-indexed
+  return `${day}/${month}`;
+};
+
+
 
 const hours = Array.from({ length: 14 }, (_, i) => 8 + i); // 8 AM to 9 PM
 
 const Timetable = () => {
-  // State to track clicked cells
-  const [clickedCells, setClickedCells] = useState({});
-  // State to track if mouse is being dragged
-  const [isDragging, setIsDragging] = useState(false);
+  const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); // Start of the current week (Monday)
+  const [days, setDays] = useState([]); // Dynamically generated days array
+  const [clickedCells, setClickedCells] = useState({}); // State to track clicked cells
+  const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
+
+  // Update the days array whenever the current week changes
+  useEffect(() => {
+    const startOfWeek = new Date(currentWeekStart);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); // Set to Monday of the current week
+    const weekDates = getCurrentWeekDates(startOfWeek);
+    const updatedDays = weekDates.map((date, index) => ({
+      name: ["MON", "TUE", "WED", "THU", "FRI"][index],
+      date: formatDate(date),
+    }));
+    setDays(updatedDays);
+  }, [currentWeekStart]);
 
   // Function to handle cell clicks
   const handleCellClick = (day, hour) => {
     const cellKey = `${day.name}-${hour}`;
     setClickedCells((prev) => ({
       ...prev,
-      [cellKey]: !prev[cellKey], 
+      [cellKey]: !prev[cellKey],
     }));
   };
 
@@ -44,16 +67,34 @@ const Timetable = () => {
     setIsDragging(false);
   };
 
+  // Function to navigate to the previous week
+  const goToPreviousWeek = () => {
+    const newStartDate = new Date(currentWeekStart);
+    newStartDate.setDate(newStartDate.getDate() - 7);
+    setCurrentWeekStart(newStartDate);
+  };
+
+  // Function to navigate to the next week
+  const goToNextWeek = () => {
+    const newStartDate = new Date(currentWeekStart);
+    newStartDate.setDate(newStartDate.getDate() + 7);
+    setCurrentWeekStart(newStartDate);
+  };
+
   return (
     <div className="timetable-container">
-      <div className="week-header">← Week 1 →</div>
+      <div className="week-header">
+        <p onClick={goToPreviousWeek}><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg></p>
+        <span>Week {formatDate(currentWeekStart)}</span>
+        <p onClick={goToNextWeek}><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg></p>
+      </div>
       <table className="timetable">
         <thead>
           <tr>
             <th></th>
             {days.map((day) => (
               <th key={day.name}>
-                {day.name} {day.date}
+                {day.name} <br /> {day.date}
               </th>
             ))}
           </tr>
