@@ -1,7 +1,7 @@
 // backend/schemas/studentSchema.js
 
 import mongoose from "mongoose";
-import semesterEnrolmentSchema from "./semesterEnrolmentSchema.js";
+import { semesterEnrolmentSchema } from "./semesterEnrolmentSchema.js";
 
 const studentSchema = new mongoose.Schema({
   fname: {
@@ -29,5 +29,5 @@ const studentSchema = new mongoose.Schema({
   semesterEnrolment: [semesterEnrolmentSchema], // Array of semester enrolments
 });
 
-const Student = mongoose.model("Student", student);
-export default SemesterEnrolment;
+const Student = mongoose.model("Student", studentSchema);
+export { studentSchema, Student };
