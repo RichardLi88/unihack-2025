@@ -6,7 +6,7 @@ function ClassCard({ data }) {
     <>
       <Flex
         direction="row"
-        bg="orange"
+        bg="#BDBDBD"
         h="40px"
         mt="10px"
         w="70%"
