@@ -20,7 +20,6 @@ function PlannerFeatures() {
       );
       console.log("generated timetable:");
       console.log(response);
-      setGeneratedSchedule(response);
     } catch (err) {
       console.error("Error getting generated timetable:", err);
     }
