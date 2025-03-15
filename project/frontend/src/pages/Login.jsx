@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "../css/Login.css";
 
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +20,10 @@ export default function Login() {
     } else {
       setError("Invalid email or password");
     }
+  };
+
+  const handleForgotPassword = () => {
+    window.location.href = "/ForgotPassword.jsx"; // Redirect to forgot password page
   };
 
   return (
@@ -51,6 +54,11 @@ export default function Login() {
           </div>
           <button type="submit" className="login-button">Login</button>
         </form>
+        
+        {/* Forgot Password Button */}
+        <button className="forgot-password-button" onClick={handleForgotPassword}>
+          Forgot Password?
+        </button>
       </div>
     </div>
   );
