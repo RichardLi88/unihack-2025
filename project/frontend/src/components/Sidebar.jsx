@@ -1,5 +1,9 @@
-import { Flex, ScrollArea } from "@mantine/core";
+import { Button, Flex, ScrollArea } from "@mantine/core";
 import Unit from "./Unit";
+import { IconSparkles } from "@tabler/icons-react";
+import { useContext } from "react";
+import { PageContext } from "../contexts/PageContext";
+import PlannerFeatures from "./PlannerFeatures";
 
 const units = [
   {
@@ -11,16 +15,18 @@ const units = [
     ],
   },
   {
-    unitCode: "FIT2004",
-    unitName: "Algorithms",
+
+    unitCode: "FIT2099",
+    unitName: "Databases",
     classes: [
       { cl_id: 125, classType: "Lecture", classDuration: "1.5hr" },
       { cl_id: 126, classType: "Workshop", classDuration: "2hr" },
     ],
   },
   {
-    unitCode: "FIT1047",
-    unitName: "Cybersecurity",
+
+    unitCode: "FIT3159",
+    unitName: "Databases",
     classes: [
       { cl_id: 127, classType: "Lab", classDuration: "3hr" },
       { cl_id: 128, classType: "Tutorial", classDuration: "1hr" },
@@ -39,6 +45,7 @@ const units = [
 const colors = ["#64B5F6", "#81C784", "#FFD54F", "#E57373"]; // Light blue, green, yellow, red
 
 function Sidebar() {
+  const { page } = useContext(PageContext);
   return (
     <Flex
       direction="column"
@@ -49,9 +56,11 @@ function Sidebar() {
       py="20px"
     >
       <ScrollArea w="100%">
-        {units.map((unit, index) => (
-          <Unit key={unit.unitCode} data={unit} bgColor={colors[index % colors.length]} />
-        ))}
+
+        {page === "planner" && <PlannerFeatures />}
+        {units.map((unit) => {
+          return <Unit key={unit.unitCode} data={unit} />;
+        })}
       </ScrollArea>
     </Flex>
   );
