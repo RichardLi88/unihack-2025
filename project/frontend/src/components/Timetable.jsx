@@ -25,6 +25,7 @@ const Timetable = () => {
   const [days, setDays] = useState([]); // Dynamically generated days array
   const [clickedCells, setClickedCells] = useState({}); // State to track clicked cells
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
+  const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
 
   // Update the days array whenever the current week changes
   useEffect(() => {
@@ -39,30 +40,34 @@ const Timetable = () => {
   }, [currentWeekStart]);
 
   // Function to handle cell clicks
-  const handleCellClick = (day, hour) => {
+  const handleCellClick = (day, hour, isSelecting) => {
     const cellKey = `${day.name}-${hour}`;
     setClickedCells((prev) => ({
       ...prev,
-      [cellKey]: !prev[cellKey],
+      [cellKey]: isSelecting,
     }));
   };
 
   // Function to handle mouse down event
   const handleMouseDown = (day, hour) => {
+    const cellKey = `${day.name}-${hour}`;
+    const isClicked = clickedCells[cellKey];
+    setDragStartState(!isClicked); // Set the initial state (true for selecting, false for deselecting)
     setIsDragging(true);
-    handleCellClick(day, hour);
+    handleCellClick(day, hour, !isClicked); // Toggle the state of the starting cell
   };
 
   // Function to handle mouse over event
   const handleMouseOver = (day, hour) => {
     if (isDragging) {
-      handleCellClick(day, hour);
+      handleCellClick(day, hour, dragStartState); // Set the state based on the initial drag state
     }
   };
 
   // Function to handle mouse up event
   const handleMouseUp = () => {
     setIsDragging(false);
+    setDragStartState(null); // Reset the drag start state
   };
 
   // Function to navigate to the previous week
