@@ -5,12 +5,12 @@ import { FilterContext } from "../contexts/FilterContext";
 import { getGeneratedTimetable } from "../backend_utility/getGeneratedTimetable";
 
 function PlannerFeatures() {
-  const { hours, setHours } = useContext(FilterContext);
+  const { hours, setHours, clickedCells } = useContext(FilterContext);
 
   const onCreateClicked = async (e) => {
     e.preventDefault();
     try {
-      const response = getGeneratedTimetable(10000000, 2025, 1, {}, hours);
+      const response = await getGeneratedTimetable(10000000, 2025, 1, clickedCells, hours);
       console.log("generated timetable:")
       console.log(response)
     } catch (err) {
