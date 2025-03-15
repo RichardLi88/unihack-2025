@@ -18,7 +18,7 @@ const units = [
     ],
   },
   {
-    unitCode: "FIT3171",
+    unitCode: "FIT2099",
     unitName: "Databases",
     classes: [
       {
@@ -34,7 +34,7 @@ const units = [
     ],
   },
   {
-    unitCode: "FIT3171",
+    unitCode: "FIT3159",
     unitName: "Databases",
     classes: [
       {
