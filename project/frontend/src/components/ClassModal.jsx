@@ -2,7 +2,7 @@ import { Modal, Text } from "@mantine/core";
 
 function ClassModal({ opened, onClose, data }) {
   return (
-    <Modal opened={opened} onClose={onClose} title={data.unitcode}>
+    <Modal centered opened={opened} onClose={onClose} title={data.unitcode}>
       <div>
         <Text>
           <strong>Class Type:</strong> {data.name}
