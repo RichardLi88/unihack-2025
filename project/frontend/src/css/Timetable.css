@@ -1,19 +1,29 @@
-.timetable-container {
+  .timetable-container {
     width: 100%;
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+
   }
-  
+  .week-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px; 
+    align-self: flex-start; /* Align the header to the left */
+    margin-left: 10%; /* Match the table's left margin */
+  }
   .timetable {
     border-collapse: collapse;
     width: 80%;
     text-align: center;
+    font-size: 17px;
   }
   
   th, td {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 5px;
   }
   
   th {
@@ -21,5 +31,10 @@
   }
   
   .empty-slot {
-    height: 40px;
+    height: 20px;
+    /* cursor: pointer; */
+  }
+
+  .empty-slot.clicked {
+    background-color: grey;
   }
