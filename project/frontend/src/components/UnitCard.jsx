@@ -15,7 +15,9 @@ function UnitCard({ data, color, onClick }) {
         onClick={onClick}
         className={styles["unit-card"]}
       >
-        <Text size="xl">{data.unitCode}</Text>
+        <Text size="xl" fw={500}>
+          {data.unitCode}
+        </Text>
         <Text size="md">{data.unitName}</Text>
       </Flex>
     </>

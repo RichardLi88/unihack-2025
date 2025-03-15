@@ -13,6 +13,7 @@ function PlannerFeatures() {
         gradient={{ from: "#DD73D6", to: "#12DFF3", deg: 90 }}
         h="100px"
         w="90%"
+        fz="20px"
         rightSection={<IconSparkles />}
       >
         Generate for me!
