@@ -15,14 +15,11 @@ function isClassDisallowed(disallowedDayHours, c, duration) {
 }
 
 async function getAllClassesForUnit(unitcode, year, semester) {
-  const unit = await Unit.findOne(
-    {
-      code: unitcode,
-      "offerings.year": year,
-      "offerings.semester": semester,
-    },
-    { "offerings.classTypes": 1 }, // only return class types
-  );
+  const unit = await Unit.findOne({
+    code: unitcode,
+    "offerings.year": year,
+    "offerings.semester": semester,
+  });
   const offering = unit.offerings[0];
   offering["code"] = unitcode;
   return offering;
@@ -70,16 +67,16 @@ async function getOfferingsFiltered(
 export { getOfferingsFiltered, getAllClassesForUnit };
 
 // testing
-
-import dotenv from "dotenv";
-import connectDB from "../database/db.js";
-dotenv.config();
-connectDB();
-
-await getOfferingsFiltered(
-  // should filter out 2 workshops
-  { "TUE-15": true, "WED-16": true, "WED-18": true },
-  ["FIT3171", "FIT2004"],
-  2025,
-  1,
-);
+//
+// import dotenv from "dotenv";
+// import connectDB from "../database/db.js";
+// dotenv.config();
+// connectDB();
+//
+// await getOfferingsFiltered(
+//   // should filter out 2 workshops
+//   { "TUE-15": true, "WED-16": true, "WED-18": true },
+//   ["FIT3171", "FIT2004"],
+//   2025,
+//   1,
+// );

@@ -1,4 +1,5 @@
 import { Student } from "../schemas/studentSchema.js";
+import { getAllClassesForUnit } from "../algorithm/algorithmBackend.js";
 
 export const getTimetable = async (req, res) => {
   try {
@@ -23,7 +24,7 @@ export const getTimetable = async (req, res) => {
 
     const units = student.semesterEnrolment.filter(
       (sem) => sem.semester === semesterNum && sem.year === yearNum,
-    );
+    )[0];
 
     return res.status(200).json({ success: true, data: units });
   } catch (err) {
@@ -56,20 +57,19 @@ export const getAllClassesForEnrolledUnits = async (req, res) => {
 
     const semesterEnrolment = student.semesterEnrolment.filter(
       (sem) => sem.semester === semesterNum && sem.year === yearNum,
-    );
+    )[0];
 
     const units = [];
     for (const u of semesterEnrolment.unitEnrolment) {
-      units.push(u.unitcode);
+      const allClasses = await getAllClassesForUnit(
+        u.unitcode,
+        yearNum,
+        semesterNum,
+      );
+      units.push(allClasses);
     }
 
-    const unitsWithClasses = [];
-    for (const unitcode in units) {
-      allClasses = await getAllClassesForUnit(unitcode, yearNum, semesterNum);
-      unitsWithClasses.push(allClasses);
-    }
-
-    return res.status(200).json({ success: true, data: unitsWithClasses });
+    return res.status(200).json({ success: true, data: units });
   } catch (err) {
     return res
       .status(500)
