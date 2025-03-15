@@ -19,12 +19,12 @@ function ClassCard({ data }) {
   };
 
   const handleActiveEdit = async () => {
-    if (editUnit === data.cl_id) {
+    if (editUnit === data._id) {
       setEditUnit(-1);
       setUnitInfo("");
     } else {
       setEditUnit(data._id);
-      setUnitInfo({ unitcode: data.unitCode, classType: data.name });
+      setUnitInfo({ unitcode: data.unitcode, classType: data.name });
       await getUnits();
     }
   };
@@ -34,8 +34,8 @@ function ClassCard({ data }) {
       <Flex w="100%" align="center" justify="end">
         {edit && (
           <Button onClick={handleActiveEdit} variant="subtle">
-            {editUnit !== data.cl_id && <IconEdit />}
-            {editUnit === data.cl_id && <IconCircleX color="red" />}
+            {editUnit !== data._id && <IconEdit />}
+            {editUnit === data._id && <IconCircleX color="red" />}
           </Button>
         )}
         <Flex

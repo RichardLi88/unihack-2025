@@ -1,7 +1,7 @@
 export const getAllClasses = async (stuid, year, sem) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/timetable/${stuid}/${year}/${sem}/all`
+      `http://localhost:3000/api/timetable/${stuid}/${year}/${sem}/all`,
     );
 
     if (!response.ok) {

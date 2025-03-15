@@ -162,17 +162,24 @@ const Timetable = () => {
     }
     if (editUnit !== -1) {
       setClickedCells({});
+      const c = units
+        .filter((element) => {
+          return element.unitcode === unitInfo.unitcode;
+        })[0]
+        .classTypes.filter((type) => type.name === unitInfo.classType)[0];
 
-      const c = units.filter((unit) => unit.unitcode === unitInfo.unitCode);
-      console.log(c[0].classTypes[0].classes);
+      const duration = c.duration;
+      const classes = c.classes;
 
+      console.log(duration);
+      console.log(classes);
       setClickedCells((prev) => {
         const updatedCells = { ...prev };
 
-        c.forEach((classItem) => {
+        classes.forEach((classItem) => {
           for (
-            let hour = classItem.time;
-            hour < classItem.time + classItem.duration;
+            let hour = parseInt(classItem.time / 100);
+            hour < classItem.time / 100 + duration;
             hour++
           ) {
             const cellKey = `${classItem.day}-${hour}`;
