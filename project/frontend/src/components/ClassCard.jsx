@@ -11,7 +11,8 @@ function ClassCard({ data }) {
     setIsModalOpen(true);
   };
 
-  const { edit, editUnit, setEditUnit } = useContext(PageContext);
+  const { edit, editUnit, setEditUnit, unitInfo, setUnitInfo } =
+    useContext(PageContext);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -20,8 +21,10 @@ function ClassCard({ data }) {
   const handleActiveEdit = () => {
     if (editUnit === data.cl_id) {
       setEditUnit(-1);
+      setUnitCode("");
     } else {
       setEditUnit(data.cl_id);
+      setUnitCode({ unitCode: data.unitCode, classType: data.classType });
     }
   };
 

@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import "../css/Timetable.css";
 import { PageContext } from "../contexts/PageContext";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
-
+import { getAllClasses } from "../utility/fetchClasses.js";
 /**
  * const data = [
   {
     offering: {
-      
+
       classTypes: [
         {
           type: "seminar",
@@ -125,7 +125,21 @@ const Timetable = () => {
   const [clickedCells, setClickedCells] = useState({}); // State to track clicked cells
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
-  const { editUnit } = useContext(PageContext);
+  const { editUnit, unitInfo } = useContext(PageContext);
+  const [classData, setClassData] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const data = await getAllClasses(10000000, 2025, 1);
+        setClassData(classData);
+        console.log(data);
+      } catch (err) {
+        console.log("error");
+      }
+    }
+    getData();
+  }, []);
 
   // Update the days array whenever the current week changes
   useEffect(() => {
@@ -141,11 +155,13 @@ const Timetable = () => {
 
   //get the data of the unit
   useEffect(() => {
-    if (editUnit === 123) {
+    if (editUnit !== -1) {
+      setClickedCells({});
+      const c = classData.filter((unit) => unit.unitcode === unitCode);
       setClickedCells((prev) => {
         const updatedCells = { ...prev };
-
-        data.forEach((classItem) => {
+        console.log(c);
+        c.forEach((classItem) => {
           for (
             let hour = classItem.time;
             hour < classItem.time + classItem.duration;
@@ -159,27 +175,12 @@ const Timetable = () => {
         return updatedCells;
       });
     } else {
-      setClickedCells((prev) => {
-        const updatedCells = { ...prev };
-
-        data.forEach((classItem) => {
-          for (
-            let hour = classItem.time;
-            hour < classItem.time + classItem.duration;
-            hour++
-          ) {
-            const cellKey = `${classItem.day}-${hour}`;
-            updatedCells[cellKey] = false;
-          }
-        });
-
-        return updatedCells;
-      });
+      setClickedCells({});
     }
   }, [editUnit]);
 
   // Function to handle cell clicks
-  const handleCellClick = (day, hour, isSelecting) => {
+  const handleCellClick = (day, hour, isSelecting, event) => {
     const cellKey = `${day.name}-${hour}`;
     if (clickedCells[cellKey] !== "class") {
       setClickedCells((prev) => ({
@@ -187,6 +188,8 @@ const Timetable = () => {
         [cellKey]: isSelecting,
       }));
     } else if (clickedCells[cellKey] === "class") {
+      const rect = event.target.getBoundingClientRect();
+      console.log(rect);
     }
   };
 
@@ -301,8 +304,8 @@ const Timetable = () => {
                     className={`empty-slot ${
                       isClicked && isClicked !== "class" ? "clicked" : ""
                     } ${isClicked === "class" ? "class-time" : ""}`}
-                    onMouseDown={() => handleMouseDown(day, hour)}
-                    onMouseOver={() => handleMouseOver(day, hour)}
+                    onMouseDown={(e) => handleMouseDown(day, hour, e)}
+                    onMouseOver={() => handleMouseOver(day, hour, cellKey)}
                     onMouseUp={handleMouseUp}
                   ></td>
                 );

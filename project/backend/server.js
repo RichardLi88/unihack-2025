@@ -3,9 +3,18 @@ import connectDB from "./database/db.js";
 import dotenv from "dotenv";
 import authRouter from "./routes/authRoute.js";
 import timetableRouter from "./routes/timetableRoute.js";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Change this to your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 const port = 3000;
 
 dotenv.config();
