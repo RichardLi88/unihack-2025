@@ -16,24 +16,23 @@ function Navbar() {
       </Text>
       <Flex gap="md" align="center">
         <Button variant="subtle" color="gray.0">
-          Planner
+          Edit
         </Button>
+        <Menu>
+          <Menu.Target>
+            <Button variant="subtle" color="gray.0">
+              Semester 1 ▼
+            </Button>
+          </Menu.Target>
+        </Menu>
+        {/* Move Help and Settings Left of Logout */}
         <ActionIcon variant="subtle" color="gray.0" size="lg">
           <IconHelpCircle size={20} />
         </ActionIcon>
         <ActionIcon variant="subtle" color="gray.0" size="lg">
           <IconSettings size={20} />
         </ActionIcon>
-        <Menu>
-          <Menu.Target>
-            <Button variant="subtle" color="gray.0">
-              Period ▼
-            </Button>
-          </Menu.Target>
-        </Menu>
-        <Button variant="subtle" color="gray.0">
-          Home
-        </Button>
+
         <Button variant="subtle" color="gray.0">
           Logout
         </Button>
