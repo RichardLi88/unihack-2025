@@ -3,6 +3,69 @@ import "../css/Timetable.css";
 import { PageContext } from "../contexts/PageContext";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 
+/**
+ * const data = [
+  {
+    offering: {
+      
+      classTypes: [
+        {
+          type: "seminar",
+          classes: [
+            {
+              day: "MON",
+              duration: 2,
+              time: 18,
+            },
+            {
+              day: "WED",
+              duration: 2,
+              time: 12,
+            },
+            {
+              day: "FRI",
+              duration: 1,
+              time: 9,
+            },
+            {
+              day: "TUE",
+              duration: 3,
+              time: 14,
+            },
+          ],
+        },
+        {
+          type: "lab",
+          classes: [
+            {
+              day: "FRI",
+              duration: 2,
+              time: 13,
+            },
+            {
+              day: "THU",
+              duration: 1,
+              time: 8,
+            },
+            {
+              day: "MON",
+              duration: 2,
+              time: 16,
+            },
+            {
+              day: "TUE",
+              duration: 3,
+              time: 10,
+            },
+          ],
+        },
+      ],
+    },
+  },
+];
+ * 
+ */
+
 const data = [
   {
     day: "MON",
@@ -123,6 +186,7 @@ const Timetable = () => {
         ...prev,
         [cellKey]: isSelecting,
       }));
+    } else if (clickedCells[cellKey] === "class") {
     }
   };
 

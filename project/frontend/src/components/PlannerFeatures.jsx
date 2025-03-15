@@ -25,6 +25,7 @@ function PlannerFeatures() {
         </Text>
         <Slider
           w="100%"
+          my="10px"
           value={hours}
           onChange={setHours}
           color="purple"

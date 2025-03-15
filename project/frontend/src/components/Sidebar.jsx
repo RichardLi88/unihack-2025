@@ -43,7 +43,7 @@ const units = [
 const colors = ["#64B5F6", "#81C784", "#FFD54F", "#E57373"]; // Light blue, green, yellow, red
 
 function Sidebar() {
-  const { page } = useContext(PageContext);
+  const { edit } = useContext(PageContext);
   return (
     <Flex
       direction="column"
@@ -54,7 +54,7 @@ function Sidebar() {
       py="20px"
     >
       <ScrollArea w="100%">
-        {page === "planner" && <PlannerFeatures />}
+        {edit && <PlannerFeatures />}
         {units.map((unit, index) => {
           return <Unit key={unit.unitCode} data={unit} color={colors[index]} />;
         })}
