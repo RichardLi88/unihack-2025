@@ -1,20 +1,30 @@
 import { useContext, useState } from "react";
-import { Text, Button, Menu, Flex, ActionIcon } from "@mantine/core";
+import { Text, Button, Menu, Flex, ActionIcon, Image } from "@mantine/core";
 import {
-  IconSettings,
   IconHelpCircle,
   IconChevronDown,
   IconEdit,
 } from "@tabler/icons-react";
 import { PageContext } from "../contexts/PageContext";
+import { useNavigate } from "react-router";
+import AllocateLogo from "../assets/allocate_logo.svg"
 
 function Navbar() {
   const [selectedSemester, setSelectedSemester] = useState("Semester 1");
+  const [modeText, setModeText] = useState("Edit")
   const { setEdit, setEditUnit } = useContext(PageContext);
+  const navigate = useNavigate()
 
   const handleEdit = () => {
     setEditUnit(-1);
-    setEdit((e) => !e);
+    setEdit((e) => {
+      if (modeText == "Edit") {
+        setModeText("Save")
+      } else {
+        setModeText("Edit")
+      }
+      return !e
+    });
   };
 
   return (
@@ -26,14 +36,15 @@ function Navbar() {
       align="center"
       justify="space-between"
     >
-      <Text size="lg" weight={500}>
-        Allocate++
-      </Text>
+      <Button variant="transparent" color="white" size="lg" weight={500} onClick={() => navigate("/")}>
+        <Image src={AllocateLogo} h="150%" alt="Allocate++" />
+      </Button>
+
 
       {/* Navbar Right Section - Items slightly closer spaced */}
       <Flex gap="md" align="center">
         <Button variant="subtle" color="gray.0" onClick={handleEdit}>
-          Edit
+          {modeText}
         </Button>
 
         {/* Semester Selection Dropdown */}
@@ -58,11 +69,8 @@ function Navbar() {
         </Menu>
 
         {/* Help and Settings Icons */}
-        <ActionIcon variant="subtle" color="gray.0" size="lg">
+        <ActionIcon variant="subtle" color="gray.0" size="lg" onClick={() => navigate("/help")}>
           <IconHelpCircle size={20} />
-        </ActionIcon>
-        <ActionIcon variant="subtle" color="gray.0" size="lg">
-          <IconSettings size={20} />
         </ActionIcon>
 
         <Button variant="subtle" color="gray.0">
