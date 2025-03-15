@@ -69,6 +69,19 @@ function backtrack(allocations, classOfferings, maxHoursPerDay) {
   return null;
 }
 
+/**
+ * Input format:
+ * [
+ *   {
+ *     code,
+ *     classTypes: {
+ *       name,
+ *       duration,
+ *       classes: [ {id, day, start}, ... ]
+ *     }
+ *   }
+ * ]
+ */
 function generateTimetable(offerings, maxHoursPerDay) {
   let classOfferings = [];
   for (let o of offerings) {
@@ -84,54 +97,26 @@ function generateTimetable(offerings, maxHoursPerDay) {
   return backtrack({}, classOfferings, maxHoursPerDay);
 }
 
+export default generateTimetable;
+
 // ========================================
-//                EXAMPLE!!!
+//                TESTING!!!
 // ========================================
 
-let offerings = [
-  {
-    code: "FIT3159",
-    classTypes: [
-      {
-        name: "workshop",
-        duration: 1,
-        classes: [
-          { id: 1, day: 0, start: 900 },
-          { id: 2, day: 0, start: 1100 },
-        ],
-      },
-      {
-        name: "applied",
-        duration: 1,
-        classes: [
-          { id: 3, day: 0, start: 900 },
-          { id: 4, day: 0, start: 1000 },
-        ],
-      },
-    ],
-  },
-  {
-    code: "FIT3077",
-    classTypes: [
-      {
-        name: "workshop",
-        duration: 1,
-        classes: [
-          { id: 1, day: 0, start: 900 },
-          { id: 2, day: 0, start: 1100 },
-        ],
-      },
-      {
-        name: "applied",
-        duration: 1,
-        classes: [
-          { id: 3, day: 1, start: 900 },
-          { id: 4, day: 1, start: 1000 },
-        ],
-      },
-    ],
-  },
-];
+import { getOfferingsFiltered } from "./algorithmBackend.js";
+import connectDB from "../database/db.js";
+import dotenv from "dotenv";
+dotenv.config();
+connectDB();
 
-let solution = generateTimetable(offerings, 3);
-console.log(solution);
+let offerings = await getOfferingsFiltered(
+  // should filter out 2 workshops
+  { "TUE-15": true, "WED-16": true, "WED-18": true },
+  ["FIT3171", "FIT2004"],
+  2025,
+  1,
+);
+
+let soln = generateTimetable(offerings, 3);
+console.log("Solution:");
+console.log(soln);
