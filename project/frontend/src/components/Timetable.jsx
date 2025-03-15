@@ -109,10 +109,10 @@ const Timetable = () => {
           }
         });
 
-        return updatedCells; // ✅ Fixed missing return
+        return updatedCells;
       });
     }
-  }, [editUnit]); // ✅ Added `data` dependency
+  }, [editUnit]);
 
   // Function to handle cell clicks
   const handleCellClick = (day, hour, isSelecting) => {
@@ -159,11 +159,41 @@ const Timetable = () => {
     setCurrentWeekStart(newStartDate);
   };
 
+  // Add a global mousemove listener to handle the dragging behavior
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      // Track mouse movement and handle cell click accordingly
+      const targetElement = e.target;
+      if (
+        targetElement &&
+        targetElement.dataset.day &&
+        targetElement.dataset.hour
+      ) {
+        handleCellClick(
+          { name: targetElement.dataset.day },
+          parseInt(targetElement.dataset.hour, 10),
+          dragStartState
+        );
+      }
+    }
+  };
+
+  const handleMouseUpGlobal = () => {
+    setIsDragging(false);
+    setDragStartState(null);
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUpGlobal);
+  };
+
+  // Attach the global mousemove event listener and mouseup event listener
+  document.addEventListener("mousemove", handleMouseMove);
+  document.addEventListener("mouseup", handleMouseUpGlobal);
+
   // Calculate the week number
   const weekNumber = getWeekNumber(currentWeekStart);
 
   return (
-    <div className="timetable-container">
+    <div className="timetable-container" onMouseLeave={handleMouseUp}>
       <div className="week-header">
         <p onClick={goToPreviousWeek}>
           <svg
