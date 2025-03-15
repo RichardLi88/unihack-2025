@@ -14,6 +14,8 @@ const hours = Array.from({ length: 14 }, (_, i) => 8 + i); // 8 AM to 9 PM
 const Timetable = () => {
   // State to track clicked cells
   const [clickedCells, setClickedCells] = useState({});
+  // State to track if mouse is being dragged
+  const [isDragging, setIsDragging] = useState(false);
 
   // Function to handle cell clicks
   const handleCellClick = (day, hour) => {
@@ -24,10 +26,27 @@ const Timetable = () => {
     }));
   };
 
+  // Function to handle mouse down event
+  const handleMouseDown = (day, hour) => {
+    setIsDragging(true);
+    handleCellClick(day, hour);
+  };
+
+  // Function to handle mouse over event
+  const handleMouseOver = (day, hour) => {
+    if (isDragging) {
+      handleCellClick(day, hour);
+    }
+  };
+
+  // Function to handle mouse up event
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
   return (
-    
     <div className="timetable-container">
-       <div className="week-header">← Week 1 →</div>
+      <div className="week-header">← Week 1 →</div>
       <table className="timetable">
         <thead>
           <tr>
@@ -50,7 +69,9 @@ const Timetable = () => {
                   <td
                     key={cellKey}
                     className={`empty-slot ${isClicked ? "clicked" : ""}`}
-                    onClick={() => handleCellClick(day, hour)}
+                    onMouseDown={() => handleMouseDown(day, hour)}
+                    onMouseOver={() => handleMouseOver(day, hour)}
+                    onMouseUp={handleMouseUp}
                   ></td>
                 );
               })}
