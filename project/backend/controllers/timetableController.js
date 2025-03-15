@@ -1,5 +1,5 @@
 import { Student } from "../schemas/studentSchema.js";
-import { getAllClassesForUnit } from "../algorithm/algorithmBackend.js";
+import { getOffering } from "../algorithm/algorithmBackend.js";
 
 export const getTimetable = async (req, res) => {
   try {
@@ -61,11 +61,7 @@ export const getAllClassesForEnrolledUnits = async (req, res) => {
 
     const units = [];
     for (const u of semesterEnrolment.unitEnrolment) {
-      const allClasses = await getAllClassesForUnit(
-        u.unitcode,
-        yearNum,
-        semesterNum,
-      );
+      const allClasses = await getOffering(u.unitcode, yearNum, semesterNum);
       units.push(allClasses);
     }
 

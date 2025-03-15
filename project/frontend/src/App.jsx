@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import { PageProvider } from "./contexts/PageContext";
 import { FilterProvider } from "./contexts/FilterContext";
+import ForgotPassword from "./pages/ForgotPassword";
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
             <Route path="/help" element={<Help />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/planner" element={<Planner />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
           </Routes>
         </FilterProvider>
       </PageProvider>

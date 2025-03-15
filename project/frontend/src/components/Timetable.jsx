@@ -18,6 +18,21 @@ const formatDate = (date) => {
   return `${day}/${month}`;
 };
 
+// Function to calculate the week number starting from March 3rd
+const getWeekNumber = (date) => {
+  const startDate = new Date(date.getFullYear(), 2, 3); // March 3rd of the current year
+  const timeDiff = date - startDate;
+  const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  const weekNumber = Math.floor(daysDiff / 7) + 1;
+  if (weekNumber == 8) {
+    return "BREAK";
+  }
+  if (weekNumber > 8) {
+    return "Week "+ (weekNumber - 1);
+  }
+  return "Week "+ weekNumber;
+};
+
 const hours = Array.from({ length: 14 }, (_, i) => 8 + i); // 8AM to 9PM
 
 const Timetable = () => {
@@ -84,11 +99,14 @@ const Timetable = () => {
     setCurrentWeekStart(newStartDate);
   };
 
+  // Calculate the week number
+  const weekNumber = getWeekNumber(currentWeekStart);
+
   return (
     <div className="timetable-container">
       <div className="week-header">
         <p onClick={goToPreviousWeek}><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg></p>
-        <span>Week {formatDate(currentWeekStart)}</span>
+        <span>{weekNumber} </span>
         <p onClick={goToNextWeek}><svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg></p>
       </div>
       <table className="timetable">
