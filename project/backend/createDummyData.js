@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import connectDB from "./database/db.js";
 import dotenv from "dotenv";
 
-import Unit from "./schemas/unitSchema.js";
-import Student from "./schemas/studentSchema.js";
+import { Unit } from "./schemas/unitSchema.js";
+import { Student } from "./schemas/studentSchema.js";
 
 dotenv.config();
 connectDB();
@@ -44,7 +44,7 @@ const dummyUnits = [
             tutor_count: 4,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Woodside",
                 room: "LG02",
                 day: "TUE",
@@ -53,7 +53,7 @@ const dummyUnits = [
                 attend_type: "hybrid",
               },
               {
-                _id: 2,
+                class_id: 2,
                 building: "Woodside",
                 room: "LG02",
                 day: "WED",
@@ -62,7 +62,7 @@ const dummyUnits = [
                 attend_type: "hybrid",
               },
               {
-                _id: 3,
+                class_id: 3,
                 building: "Woodside",
                 room: "LG02",
                 day: "FRI",
@@ -79,7 +79,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 4,
+                class_id: 4,
                 building: "LTB",
                 room: "1.27",
                 day: "MON",
@@ -88,7 +88,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "LTB",
                 room: "1.26",
                 day: "TUE",
@@ -97,7 +97,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "LTB",
                 room: "1.27",
                 day: "TUE",
@@ -106,7 +106,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 7,
+                class_id: 7,
                 building: "LTB",
                 room: "1.35",
                 day: "FRI",
@@ -130,7 +130,7 @@ const dummyUnits = [
             tutor_count: 4,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Woodside",
                 room: "LG02",
                 day: "TUE",
@@ -139,7 +139,7 @@ const dummyUnits = [
                 attend_type: "hybrid",
               },
               {
-                _id: 2,
+                class_id: 2,
                 building: "Woodside",
                 room: "LG02",
                 day: "WED",
@@ -148,7 +148,7 @@ const dummyUnits = [
                 attend_type: "hybrid",
               },
               {
-                _id: 3,
+                class_id: 3,
                 building: "Woodside",
                 room: "LG02",
                 day: "FRI",
@@ -165,7 +165,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 4,
+                class_id: 4,
                 building: "LTB",
                 room: "1.27",
                 day: "MON",
@@ -174,7 +174,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "LTB",
                 room: "1.26",
                 day: "TUE",
@@ -183,7 +183,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "LTB",
                 room: "1.27",
                 day: "TUE",
@@ -192,7 +192,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 7,
+                class_id: 7,
                 building: "LTB",
                 room: "1.35",
                 day: "FRI",
@@ -222,7 +222,7 @@ const dummyUnits = [
             tutor_count: 4,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Woodside",
                 room: "LG02",
                 day: "MON",
@@ -231,7 +231,7 @@ const dummyUnits = [
                 attend_type: "hybrid",
               },
               {
-                _id: 2,
+                class_id: 2,
                 building: "LTB",
                 room: "G81",
                 day: "FRI",
@@ -248,7 +248,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 3,
+                class_id: 3,
                 building: "LTB",
                 room: "1.01",
                 day: "MON",
@@ -257,7 +257,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 4,
+                class_id: 4,
                 building: "LTB",
                 room: "1.08",
                 day: "TUE",
@@ -266,7 +266,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "Woodside",
                 room: "1.04",
                 day: "WED",
@@ -275,7 +275,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "Woodside",
                 room: "1.04",
                 day: "WED",
@@ -284,7 +284,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 7,
+                class_id: 7,
                 building: "Woodside",
                 room: "2.07",
                 day: "THU",
@@ -293,7 +293,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 8,
+                class_id: 8,
                 building: "Woodside",
                 room: "1.04",
                 day: "THU",
@@ -317,7 +317,7 @@ const dummyUnits = [
             tutor_count: 4,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Woodside",
                 room: "LG02",
                 day: "MON",
@@ -326,7 +326,7 @@ const dummyUnits = [
                 attend_type: "hybrid",
               },
               {
-                _id: 2,
+                class_id: 2,
                 building: "LTB",
                 room: "G81",
                 day: "FRI",
@@ -343,7 +343,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 3,
+                class_id: 3,
                 building: "LTB",
                 room: "1.01",
                 day: "MON",
@@ -352,7 +352,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 4,
+                class_id: 4,
                 building: "LTB",
                 room: "1.08",
                 day: "TUE",
@@ -361,7 +361,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "Woodside",
                 room: "1.04",
                 day: "WED",
@@ -370,7 +370,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "Woodside",
                 room: "1.04",
                 day: "WED",
@@ -379,7 +379,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 7,
+                class_id: 7,
                 building: "Woodside",
                 room: "2.07",
                 day: "THU",
@@ -388,7 +388,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 8,
+                class_id: 8,
                 building: "Woodside",
                 room: "1.04",
                 day: "THU",
@@ -418,7 +418,7 @@ const dummyUnits = [
             tutor_count: 1,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Learning Village",
                 room: "G08",
                 day: "MON",
@@ -427,7 +427,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 2,
+                class_id: 2,
                 building: "Learning Village",
                 room: "G09",
                 day: "MON",
@@ -436,7 +436,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 3,
+                class_id: 3,
                 building: "Learning Village",
                 room: "G08",
                 day: "MON",
@@ -445,7 +445,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 4,
+                class_id: 4,
                 building: "Learning Village",
                 room: "G11",
                 day: "WED",
@@ -454,7 +454,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "Learning Village",
                 room: "1.05",
                 day: "WED",
@@ -463,7 +463,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "Learning Village",
                 room: "G08",
                 day: "FRI",
@@ -472,7 +472,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 7,
+                class_id: 7,
                 building: "Learning Village",
                 room: "G06",
                 day: "FRI",
@@ -481,7 +481,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 8,
+                class_id: 8,
                 building: "Learning Village",
                 room: "G08",
                 day: "FRI",
@@ -505,7 +505,7 @@ const dummyUnits = [
             tutor_count: 1,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Learning Village",
                 room: "G08",
                 day: "MON",
@@ -514,7 +514,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 2,
+                class_id: 2,
                 building: "Learning Village",
                 room: "G09",
                 day: "MON",
@@ -523,7 +523,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 3,
+                class_id: 3,
                 building: "Learning Village",
                 room: "G08",
                 day: "MON",
@@ -532,7 +532,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 4,
+                class_id: 4,
                 building: "Learning Village",
                 room: "G11",
                 day: "WED",
@@ -541,7 +541,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "Learning Village",
                 room: "1.05",
                 day: "WED",
@@ -550,7 +550,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "Learning Village",
                 room: "G08",
                 day: "FRI",
@@ -559,7 +559,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 7,
+                class_id: 7,
                 building: "Learning Village",
                 room: "G06",
                 day: "FRI",
@@ -568,7 +568,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 8,
+                class_id: 8,
                 building: "Learning Village",
                 room: "G08",
                 day: "FRI",
@@ -598,7 +598,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Woodside",
                 room: "3.01",
                 day: "TUE",
@@ -607,7 +607,7 @@ const dummyUnits = [
                 attend_type: "online-realtime",
               },
               {
-                _id: 2,
+                class_id: 2,
                 building: "Woodside",
                 room: "3.04",
                 day: "THU",
@@ -631,7 +631,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Woodside",
                 room: "3.01",
                 day: "TUE",
@@ -640,7 +640,7 @@ const dummyUnits = [
                 attend_type: "online-realtime",
               },
               {
-                _id: 2,
+                class_id: 2,
                 building: "Woodside",
                 room: "3.04",
                 day: "THU",
@@ -670,7 +670,7 @@ const dummyUnits = [
             tutor_count: 4,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "LTB",
                 room: "G81",
                 day: "THU",
@@ -687,7 +687,7 @@ const dummyUnits = [
             tutor_count: 1,
             classes: [
               {
-                _id: 2,
+                class_id: 2,
                 building: "LTB",
                 room: "2.01",
                 day: "TUE",
@@ -696,7 +696,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 3,
+                class_id: 3,
                 building: "LTB",
                 room: "2.01",
                 day: "THU",
@@ -705,7 +705,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 4,
+                class_id: 4,
                 building: "Woodside",
                 room: "2.01",
                 day: "THU",
@@ -714,7 +714,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "Woodside",
                 room: "2.01",
                 day: "THU",
@@ -723,7 +723,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "Woodside",
                 room: "2.02",
                 day: "FRI",
@@ -747,7 +747,7 @@ const dummyUnits = [
             tutor_count: 4,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "LTB",
                 room: "G81",
                 day: "THU",
@@ -764,7 +764,7 @@ const dummyUnits = [
             tutor_count: 1,
             classes: [
               {
-                _id: 2,
+                class_id: 2,
                 building: "LTB",
                 room: "2.01",
                 day: "TUE",
@@ -773,7 +773,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 3,
+                class_id: 3,
                 building: "LTB",
                 room: "2.01",
                 day: "THU",
@@ -782,7 +782,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 4,
+                class_id: 4,
                 building: "Woodside",
                 room: "2.01",
                 day: "THU",
@@ -791,7 +791,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "Woodside",
                 room: "2.01",
                 day: "THU",
@@ -800,7 +800,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "Woodside",
                 room: "2.02",
                 day: "FRI",
@@ -830,7 +830,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Learning Village",
                 room: "G08",
                 day: "THU",
@@ -847,7 +847,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 2,
+                class_id: 2,
                 building: "Woodside",
                 room: "1.03",
                 day: "MON",
@@ -856,7 +856,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 3,
+                class_id: 3,
                 building: "Woodside",
                 room: "1.08",
                 day: "MON",
@@ -865,7 +865,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 4,
+                class_id: 4,
                 building: "Woodside",
                 room: "1.01",
                 day: "WED",
@@ -874,7 +874,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "Woodside",
                 room: "1.03",
                 day: "WED",
@@ -883,7 +883,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "LTB",
                 room: "1.03",
                 day: "THU",
@@ -892,7 +892,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 7,
+                class_id: 7,
                 building: "LTB",
                 room: "1.38",
                 day: "FRI",
@@ -916,7 +916,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 1,
+                class_id: 1,
                 building: "Learning Village",
                 room: "G08",
                 day: "THU",
@@ -933,7 +933,7 @@ const dummyUnits = [
             tutor_count: 3,
             classes: [
               {
-                _id: 2,
+                class_id: 2,
                 building: "Woodside",
                 room: "1.03",
                 day: "MON",
@@ -942,7 +942,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 3,
+                class_id: 3,
                 building: "Woodside",
                 room: "1.08",
                 day: "MON",
@@ -951,7 +951,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 4,
+                class_id: 4,
                 building: "Woodside",
                 room: "1.01",
                 day: "WED",
@@ -960,7 +960,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 5,
+                class_id: 5,
                 building: "Woodside",
                 room: "1.03",
                 day: "WED",
@@ -969,7 +969,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 6,
+                class_id: 6,
                 building: "LTB",
                 room: "1.03",
                 day: "THU",
@@ -978,7 +978,7 @@ const dummyUnits = [
                 attend_type: "in-person",
               },
               {
-                _id: 7,
+                class_id: 7,
                 building: "LTB",
                 room: "1.38",
                 day: "FRI",

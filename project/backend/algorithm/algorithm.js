@@ -76,7 +76,7 @@ function generateTimetable(offerings, maxHoursPerDay) {
       for (let c of ct.classes) {
         c.end = c.start + ct.duration * 100;
       }
-      ct.id = o.unitcode + ":" + ct.name; // e.g. FIT3159:workshop
+      ct.id = o.code + ":" + ct.name; // e.g. FIT3159:workshop
       classOfferings.push(ct);
     }
   }
@@ -90,7 +90,7 @@ function generateTimetable(offerings, maxHoursPerDay) {
 
 let offerings = [
   {
-    unitcode: "FIT3159",
+    code: "FIT3159",
     classTypes: [
       {
         name: "workshop",
@@ -111,7 +111,7 @@ let offerings = [
     ],
   },
   {
-    unitcode: "FIT3077",
+    code: "FIT3077",
     classTypes: [
       {
         name: "workshop",

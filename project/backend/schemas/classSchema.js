@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 
 const classSchema = new mongoose.Schema({
-  _id: {
+  class_id: {
     type: Number,
     required: true,
     unique: true, // unique within each offering
@@ -37,4 +37,4 @@ const classSchema = new mongoose.Schema({
 });
 
 const Class = mongoose.model("Class", classSchema);
-export default Class;
+export { classSchema, Class };
