@@ -11,6 +11,7 @@ function ClassCard({ data }) {
   const handleCardClick = () => {
     setIsModalOpen(true);
   };
+  console.log(data);
   const { getUnits } = useContext(UnitContext);
   const { edit, editUnit, setEditUnit, setUnitInfo } = useContext(PageContext);
 
