@@ -2,11 +2,8 @@ import mongoose from "mongoose";
 import connectDB from "./database/db.js";
 import dotenv from "dotenv";
 
-import unitSchema from "./schemas/unitSchema.js";
-import studentSchema from "./schemas/studentSchema.js";
-
-const Unit = mongoose.model("Unit", unitSchema);
-const Student = mongoose.model("Student", studentSchema);
+import Unit from "./schemas/unitSchema.js";
+import Student from "./schemas/studentSchema.js";
 
 dotenv.config();
 connectDB();
