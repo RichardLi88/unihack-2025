@@ -89,7 +89,7 @@ const Timetable = () => {
             hour++
           ) {
             const cellKey = `${classItem.day}-${hour}`;
-            updatedCells[cellKey] = true;
+            updatedCells[cellKey] = "class";
           }
         });
 
@@ -118,10 +118,12 @@ const Timetable = () => {
   // Function to handle cell clicks
   const handleCellClick = (day, hour, isSelecting) => {
     const cellKey = `${day.name}-${hour}`;
-    setClickedCells((prev) => ({
-      ...prev,
-      [cellKey]: isSelecting,
-    }));
+    if (clickedCells[cellKey] !== "class") {
+      setClickedCells((prev) => ({
+        ...prev,
+        [cellKey]: isSelecting,
+      }));
+    }
   };
 
   // Function to handle mouse down event
@@ -228,10 +230,13 @@ const Timetable = () => {
               {days.map((day) => {
                 const cellKey = `${day.name}-${hour}`;
                 const isClicked = clickedCells[cellKey];
+
                 return (
                   <td
                     key={cellKey}
-                    className={`empty-slot ${isClicked ? "clicked" : ""}`}
+                    className={`empty-slot ${
+                      isClicked && isClicked !== "class" ? "clicked" : ""
+                    } ${isClicked === "class" ? "class-time" : ""}`}
                     onMouseDown={() => handleMouseDown(day, hour)}
                     onMouseOver={() => handleMouseOver(day, hour)}
                     onMouseUp={handleMouseUp}

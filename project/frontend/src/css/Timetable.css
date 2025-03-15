@@ -55,3 +55,7 @@ th {
 .week-header button:hover {
   background-color: #e0e0e0;
 }
+
+.class-time {
+  background-color: greenyellow !important;
+}
