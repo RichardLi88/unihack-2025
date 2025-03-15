@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import Lottie from "lottie-react";
 import animationData from "../assets/login-animation.json";
 import "../css/Login.css";
@@ -8,6 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -82,15 +84,24 @@ export default function Login() {
                 placeholder="Enter your email"
               />
             </div>
-            <div className="form-group">
+            <div className="form-group password-group">
               <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-              />
+              <div className="password-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                />
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <IconEyeOff size={20} /> : <IconEye size={20} />}
+                </button>
+              </div>
             </div>
 
             <motion.button 
