@@ -13,7 +13,6 @@ function isValidAllocation(allocated, selected) {
     if (hasConflict(assignedClass, selected)) {
       return false;
     }
-    console.log(`CONFLICT: ${assignedClass.id} & ${selected.id}`);
   }
   return true;
 }
@@ -38,8 +37,6 @@ function backtrack(allocations, offerings) {
 
   for (let c of nextOffering.classes) {
     if (isValidAllocation(allocations, c)) {
-      console.log(`allocated ${c.id}\n`);
-
       allocations[nextOffering.id] = c; // choose this class
       let result = backtrack(allocations, offerings);
       if (result) return result; // return if valid allocation
@@ -51,30 +48,33 @@ function backtrack(allocations, offerings) {
   return null;
 }
 
-// Example input
-let offerings = [
-  {
-    id: "Math",
-    classes: [
-      { id: "Math-1", day: "mon", start: 9, end: 10 },
-      { id: "Math-2", day: "mon", start: 11, end: 12 },
-    ],
-  },
-  {
-    id: "Physics",
-    classes: [
-      { id: "Physics-1", day: "mon", start: 9, end: 10 },
-      { id: "Physics-2", day: "mon", start: 10, end: 11 },
-    ],
-  },
-  {
-    id: "Chemistry",
-    classes: [
-      { id: "Chem-1", day: "mon", start: 10, end: 11 },
-      { id: "Chem-2", day: "mon", start: 11, end: 12 },
-    ],
-  },
-];
-
-let solution = backtrack({}, offerings);
-console.log(solution);
+// ========================================
+//                EXAMPLE!!!
+// ========================================
+//
+// let offerings = [
+//   {
+//     id: "Math",
+//     classes: [
+//       { id: "Math-1", day: "mon", start: 9, end: 10 },
+//       { id: "Math-2", day: "mon", start: 11, end: 12 },
+//     ],
+//   },
+//   {
+//     id: "Physics",
+//     classes: [
+//       { id: "Physics-1", day: "mon", start: 9, end: 10 },
+//       { id: "Physics-2", day: "mon", start: 10, end: 11 },
+//     ],
+//   },
+//   {
+//     id: "Chemistry",
+//     classes: [
+//       { id: "Chem-1", day: "mon", start: 10, end: 11 },
+//       { id: "Chem-2", day: "mon", start: 11, end: 12 },
+//     ],
+//   },
+// ];
+//
+// let solution = backtrack({}, offerings);
+// console.log(solution);
