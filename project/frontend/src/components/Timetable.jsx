@@ -4,6 +4,7 @@ import { PageContext } from "../contexts/PageContext";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { getAllClasses } from "../utility/fetchClasses.js";
 import { UnitContext } from "../contexts/UnitContext.jsx";
+
 /**
  * const data = [
   {
@@ -123,7 +124,8 @@ const hours = Array.from({ length: 14 }, (_, i) => 8 + i); // 8AM to 9PM
 const Timetable = () => {
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); // Start of the current week (Monday)
   const [days, setDays] = useState([]); // Dynamically generated days array
-  const [clickedCells, setClickedCells] = useState({}); // State to track clicked cells
+  // const [clickedCells, setClickedCells] = useState({}); // State to track clicked cells
+  const { clickedCells, setClickedCells } = useContext(FilterContext);
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
   const { editUnit, unitInfo } = useContext(PageContext);
@@ -283,9 +285,9 @@ const Timetable = () => {
       <table className="timetable">
         <thead>
           <tr>
-            <th></th>
+            <th style={{ width: '9%' }}></th>
             {days.map((day) => (
-              <th key={day.name}>
+              <th key={day.name} style={{ width: '18%' }}>
                 {day.name} <br /> {day.date}
               </th>
             ))}
@@ -320,7 +322,7 @@ const Timetable = () => {
           ))}
         </tbody>
       </table>
-    </div>
+    </div >
   );
 };
 

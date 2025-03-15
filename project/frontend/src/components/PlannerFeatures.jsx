@@ -2,9 +2,21 @@ import { Button, Flex, Text, Slider } from "@mantine/core";
 import { IconSparkles } from "@tabler/icons-react";
 import { useContext } from "react";
 import { FilterContext } from "../contexts/FilterContext";
+import { getGeneratedTimetable } from "../backend_utility/getGeneratedTimetable";
 
 function PlannerFeatures() {
-  const { hours, setHours } = useContext(FilterContext);
+  const { hours, setHours, clickedCells } = useContext(FilterContext);
+
+  const onCreateClicked = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await getGeneratedTimetable(10000000, 2025, 1, clickedCells, hours);
+      console.log("generated timetable:")
+      console.log(response)
+    } catch (err) {
+      console.error("Error getting generated timetable:", err)
+    }
+  }
 
   return (
     <Flex direction="column" py="10px" w="100%" align="center" justify="center">
@@ -13,6 +25,7 @@ function PlannerFeatures() {
         gradient={{ from: "#DD73D6", to: "#12DFF3", deg: 90 }}
         h="100px"
         w="90%"
+        onClick={onCreateClicked}
         fz="20px"
         rightSection={<IconSparkles />}
       >

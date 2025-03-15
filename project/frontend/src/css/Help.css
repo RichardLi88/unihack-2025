@@ -45,4 +45,16 @@
   .help-button:hover {
     background-color: #0056b3;
   }
+
+  /* Move the animation up */
+.help-animation-container {
+  position: absolute;
+  bottom: 705px; /* Adjust this value to move it higher */
+  left: 0;
+  width: 100%;
+  height: 30vh; /* Keep it large enough to be visible */
+  z-index: 1; /* Ensure it stays behind the help content */
+  pointer-events: none; /* Prevents interaction issues */
+}
+
   

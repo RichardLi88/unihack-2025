@@ -10,7 +10,7 @@ function hasConflict(c1, c2) {
 /** Returns true if can allocate `selected` given `allocated` */
 function isValidAllocation(allocated, selected, maxHoursPerDay) {
   function getClassDuration(c) {
-    return (c.end - c.start) / 100;
+    return (c.end - c.time) / 100;
   }
 
   // validate total hours < max hours per day
