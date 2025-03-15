@@ -15,18 +15,16 @@ const units = [
     ],
   },
   {
-
     unitCode: "FIT2099",
-    unitName: "Databases",
+    unitName: "Java OOP",
     classes: [
       { cl_id: 125, classType: "Lecture", classDuration: "1.5hr" },
       { cl_id: 126, classType: "Workshop", classDuration: "2hr" },
     ],
   },
   {
-
     unitCode: "FIT3159",
-    unitName: "Databases",
+    unitName: "Computer Architecture",
     classes: [
       { cl_id: 127, classType: "Lab", classDuration: "3hr" },
       { cl_id: 128, classType: "Tutorial", classDuration: "1hr" },
@@ -56,10 +54,9 @@ function Sidebar() {
       py="20px"
     >
       <ScrollArea w="100%">
-
         {page === "planner" && <PlannerFeatures />}
-        {units.map((unit) => {
-          return <Unit key={unit.unitCode} data={unit} />;
+        {units.map((unit, index) => {
+          return <Unit key={unit.unitCode} data={unit} color={colors[index]} />;
         })}
       </ScrollArea>
     </Flex>
