@@ -1,0 +1,25 @@
+.timetable-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .timetable {
+    border-collapse: collapse;
+    width: 80%;
+    text-align: center;
+  }
+  
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  th {
+    background-color: #f5f5f5;
+  }
+  
+  .empty-slot {
+    height: 40px;
+  }
