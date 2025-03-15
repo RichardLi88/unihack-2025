@@ -3,12 +3,16 @@ import UnitCard from "./UnitCard";
 import ClassCard from "./ClassCard";
 import { useState } from "react";
 
-function Unit({ data }) {
+function Unit({ data, color }) {
   const [visible, setVisible] = useState(true);
 
   return (
     <Flex direction="column" w="100%" align="center" my="15px">
-      <UnitCard data={data} onClick={() => setVisible((v) => !v)} />
+      <UnitCard
+        data={data}
+        color={color}
+        onClick={() => setVisible((v) => !v)}
+      />
       <Transition
         mounted={visible}
         transition={{

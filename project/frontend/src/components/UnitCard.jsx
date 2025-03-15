@@ -1,12 +1,12 @@
 import { Flex, Text } from "@mantine/core";
 import styles from "../css/Sidebar.module.css";
 
-function UnitCard({ data, onClick }) {
+function UnitCard({ data, color, onClick }) {
   return (
     <>
       <Flex
         direction="column"
-        bg="lightblue"
+        bg={color}
         h="60px"
         w="90%"
         style={{ cursor: "pointer" }}
