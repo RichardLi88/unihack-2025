@@ -4,69 +4,7 @@ import { PageContext } from "../contexts/PageContext";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { getAllClasses } from "../utility/fetchClasses.js";
 import { UnitContext } from "../contexts/UnitContext.jsx";
-
-/**
- * const data = [
-  {
-    offering: {
-
-      classTypes: [
-        {
-          type: "seminar",
-          classes: [
-            {
-              day: "MON",
-              duration: 2,
-              time: 18,
-            },
-            {
-              day: "WED",
-              duration: 2,
-              time: 12,
-            },
-            {
-              day: "FRI",
-              duration: 1,
-              time: 9,
-            },
-            {
-              day: "TUE",
-              duration: 3,
-              time: 14,
-            },
-          ],
-        },
-        {
-          type: "lab",
-          classes: [
-            {
-              day: "FRI",
-              duration: 2,
-              time: 13,
-            },
-            {
-              day: "THU",
-              duration: 1,
-              time: 8,
-            },
-            {
-              day: "MON",
-              duration: 2,
-              time: 16,
-            },
-            {
-              day: "TUE",
-              duration: 3,
-              time: 10,
-            },
-          ],
-        },
-      ],
-    },
-  },
-];
- * 
- */
+import { FilterContext } from "../contexts/FilterContext.jsx";
 
 const data = [
   {
@@ -125,7 +63,7 @@ const Timetable = () => {
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); // Start of the current week (Monday)
   const [days, setDays] = useState([]); // Dynamically generated days array
   // const [clickedCells, setClickedCells] = useState({}); // State to track clicked cells
-  const [clickedCells, setClickedCells] = useState({});
+  const { clickedCells, setClickedCells } = useContext(FilterContext);
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
   const { editUnit, unitInfo } = useContext(PageContext);
@@ -310,9 +248,8 @@ const Timetable = () => {
                 return (
                   <td
                     key={cellKey}
-                    className={`empty-slot ${
-                      isClicked && isClicked !== "class" ? "clicked" : ""
-                    } ${isClicked === "class" ? "class-time" : ""}`}
+                    className={`empty-slot ${isClicked && isClicked !== "class" ? "clicked" : ""
+                      } ${isClicked === "class" ? "class-time" : ""}`}
                     onMouseDown={(e) => handleMouseDown(day, hour, e)}
                     onMouseOver={() => handleMouseOver(day, hour, cellKey)}
                     onMouseUp={handleMouseUp}
