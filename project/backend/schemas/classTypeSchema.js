@@ -23,4 +23,5 @@ const classTypeSchema = new mongoose.Schema({
   classes: [classSchema], // Array of classes
 });
 
-export default classTypeSchema;
+const ClassType = mongoose.model("ClassType", classTypeSchema);
+export default ClassType;

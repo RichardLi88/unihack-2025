@@ -19,4 +19,5 @@ const offeringSchema = new mongoose.Schema({
   classTypes: [classTypeSchema], // Array of class types
 });
 
-export default offeringSchema;
+const Offering = mongoose.model("Offering", offeringSchema);
+export default Offering;

@@ -1,6 +1,7 @@
+import Student from "../schemas/studentSchema.js";
+
 export const getTimetable = async (req, res) => {
   try {
-    return res.status(201).json({ success: true, data: "Hello" });
     const { studentId, year, semester } = req.params;
     if (!studentId) {
       return res
@@ -12,7 +13,7 @@ export const getTimetable = async (req, res) => {
     const semesterNum = parseInt(semester, 10);
 
     // Find timetable for the given studentId
-    const student = await studentSchema.findOne({ stuid: studentId });
+    const student = await Student.findOne({ stuid: studentId });
 
     if (!student) {
       return res
@@ -21,7 +22,7 @@ export const getTimetable = async (req, res) => {
     }
 
     const units = student.semesterEnrolment.filter(
-      (sem) => sem.semester === semesterNum && sem.year === yearNum,
+      (sem) => sem.semester === semesterNum && sem.year === yearNum
     );
 
     return res.status(200).json({ success: true, data: units });

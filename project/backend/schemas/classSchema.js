@@ -17,8 +17,9 @@ const classSchema = new mongoose.Schema({
     required: true,
   },
   day: {
-    type: Number, // 0=mon, 4=fri
+    type: String,
     required: true,
+    enum: ["MON", "TUE", "WED", "THU", "FRI"],
   },
   time: {
     type: Number, // start time in 24h format
@@ -35,4 +36,5 @@ const classSchema = new mongoose.Schema({
   },
 });
 
-export default classSchema;
+const Class = mongoose.model("Class", classSchema);
+export default Class;

@@ -15,4 +15,8 @@ const semesterEnrolmentSchema = new mongoose.Schema({
   unitEnrolment: [unitEnrolmentSchema], // Array of unit enrolments
 });
 
-export default semesterEnrolmentSchema;
+const SemesterEnrolment = mongoose.model(
+  "SemesterEnrolment",
+  semesterEnrolmentSchema,
+);
+export default SemesterEnrolment;
