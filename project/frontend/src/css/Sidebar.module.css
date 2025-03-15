@@ -1,0 +1,15 @@
+div {
+	margin: 0px;
+}
+
+p {
+	margin: 0px;
+}
+
+.unit-card {
+	border-radius: 20px;
+}
+
+.class-card {
+	border-radius: 10px;
+}
