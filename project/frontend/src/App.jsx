@@ -8,19 +8,22 @@ import Navbar from "./components/Navbar";
 import { PageProvider } from "./contexts/PageContext";
 import { FilterProvider } from "./contexts/FilterContext";
 import ForgotPassword from "./pages/ForgotPassword";
+import { UnitProvider } from "./contexts/UnitContext";
 function App() {
   return (
     <>
       <PageProvider>
         <Navbar />
         <FilterProvider>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/help" element={<Help />} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/planner" element={<Planner />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
-          </Routes>
+          <UnitProvider>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/Login" element={<Login />} />
+              <Route path="/planner" element={<Planner />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+            </Routes>
+          </UnitProvider>
         </FilterProvider>
       </PageProvider>
     </>

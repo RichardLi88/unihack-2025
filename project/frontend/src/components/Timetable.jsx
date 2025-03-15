@@ -3,6 +3,7 @@ import "../css/Timetable.css";
 import { PageContext } from "../contexts/PageContext";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { getAllClasses } from "../utility/fetchClasses.js";
+import { UnitContext } from "../contexts/UnitContext.jsx";
 /**
  * const data = [
   {
@@ -126,14 +127,13 @@ const Timetable = () => {
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
   const { editUnit, unitInfo } = useContext(PageContext);
-  const [classData, setClassData] = useState([]);
+  const { units, setUnits } = useContext(UnitContext);
 
   useEffect(() => {
     async function getData() {
       try {
         const data = await getAllClasses(10000000, 2025, 1);
-        setClassData(classData);
-        console.log(data);
+        setUnits(data);
       } catch (err) {
         console.log("error");
       }
@@ -153,14 +153,34 @@ const Timetable = () => {
     setDays(updatedDays);
   }, [currentWeekStart]);
 
-  //get the data of the unit
+  // Function to handle cell clicks
+  const handleCellClick = (day, hour, isSelecting, event) => {
+    const cellKey = `${day.name}-${hour}`;
+    if (clickedCells[cellKey] !== "class") {
+      setClickedCells((prev) => ({
+        ...prev,
+        [cellKey]: isSelecting,
+      }));
+    } else if (clickedCells[cellKey] === "class") {
+      const rect = event.target.getBoundingClientRect();
+      console.log(rect);
+    }
+  };
+
   useEffect(() => {
+    console.log("Editing unit:", editUnit);
+    if (units.length === 0) {
+      return;
+    }
     if (editUnit !== -1) {
       setClickedCells({});
-      const c = classData.filter((unit) => unit.unitcode === unitCode);
+
+      const c = units.filter((unit) => unit.unitcode === unitInfo.unitCode);
+      console.log(c[0].classTypes[0].classes);
+
       setClickedCells((prev) => {
         const updatedCells = { ...prev };
-        console.log(c);
+
         c.forEach((classItem) => {
           for (
             let hour = classItem.time;
@@ -178,20 +198,6 @@ const Timetable = () => {
       setClickedCells({});
     }
   }, [editUnit]);
-
-  // Function to handle cell clicks
-  const handleCellClick = (day, hour, isSelecting, event) => {
-    const cellKey = `${day.name}-${hour}`;
-    if (clickedCells[cellKey] !== "class") {
-      setClickedCells((prev) => ({
-        ...prev,
-        [cellKey]: isSelecting,
-      }));
-    } else if (clickedCells[cellKey] === "class") {
-      const rect = event.target.getBoundingClientRect();
-      console.log(rect);
-    }
-  };
 
   // Function to handle mouse down event
   const handleMouseDown = (day, hour) => {
@@ -217,6 +223,9 @@ const Timetable = () => {
 
   // Function to navigate to the previous week
   const goToPreviousWeek = () => {
+    if (getWeekNumber(currentWeekStart) == "Week 1") {
+      return;
+    }
     const newStartDate = new Date(currentWeekStart);
     newStartDate.setDate(newStartDate.getDate() - 7);
     setCurrentWeekStart(newStartDate);
@@ -224,6 +233,9 @@ const Timetable = () => {
 
   // Function to navigate to the next week
   const goToNextWeek = () => {
+    if (getWeekNumber(currentWeekStart) == "Week 12") {
+      return;
+    }
     const newStartDate = new Date(currentWeekStart);
     newStartDate.setDate(newStartDate.getDate() + 7);
     setCurrentWeekStart(newStartDate);

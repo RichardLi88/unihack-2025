@@ -21,10 +21,10 @@ function ClassCard({ data }) {
   const handleActiveEdit = () => {
     if (editUnit === data.cl_id) {
       setEditUnit(-1);
-      setUnitCode("");
+      setUnitInfo("");
     } else {
       setEditUnit(data.cl_id);
-      setUnitCode({ unitCode: data.unitCode, classType: data.classType });
+      setUnitInfo({ unitCode: data.unitCode, classType: data.classType });
     }
   };
 
