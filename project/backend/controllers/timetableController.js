@@ -1,5 +1,6 @@
 export const getTimetable = async (req, res) => {
   try {
+    return res.status(201).json({ success: true, data: "Hello" });
     const { studentId, year, semester } = req.params;
     if (!studentId) {
       return res
