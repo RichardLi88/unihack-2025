@@ -4,27 +4,28 @@ import styles from "../css/Sidebar.module.css";
 import ClassModal from "./ClassModal";
 import { PageContext } from "../contexts/PageContext";
 import { IconCircleX, IconEdit } from "@tabler/icons-react";
+import { UnitContext } from "../contexts/UnitContext";
 
 function ClassCard({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleCardClick = () => {
     setIsModalOpen(true);
   };
-
-  const { edit, editUnit, setEditUnit, unitInfo, setUnitInfo } =
-    useContext(PageContext);
+  const { getUnits } = useContext(UnitContext);
+  const { edit, editUnit, setEditUnit, setUnitInfo } = useContext(PageContext);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
 
-  const handleActiveEdit = () => {
-    if (editUnit === data.cl_id) {
+  const handleActiveEdit = async () => {
+    if (editUnit === data._id) {
       setEditUnit(-1);
-      setUnitCode("");
+      setUnitInfo("");
     } else {
-      setEditUnit(data.cl_id);
-      setUnitCode({ unitCode: data.unitCode, classType: data.classType });
+      setEditUnit(data._id);
+      setUnitInfo({ unitcode: data.unitcode, classType: data.name });
+      await getUnits();
     }
   };
 
@@ -33,8 +34,8 @@ function ClassCard({ data }) {
       <Flex w="100%" align="center" justify="end">
         {edit && (
           <Button onClick={handleActiveEdit} variant="subtle">
-            {editUnit !== data.cl_id && <IconEdit />}
-            {editUnit === data.cl_id && <IconCircleX color="red" />}
+            {editUnit !== data._id && <IconEdit />}
+            {editUnit === data._id && <IconCircleX color="red" />}
           </Button>
         )}
         <Flex
@@ -51,8 +52,8 @@ function ClassCard({ data }) {
           onClick={handleCardClick}
           style={{ cursor: "pointer" }}
         >
-          <Text size="l">{data.classType}</Text>
-          <Text size="sm">{data.classDuration}</Text>
+          <Text size="l">{data.name}</Text>
+          <Text size="sm">{data.duration + "h"}</Text>
         </Flex>
 
         <ClassModal

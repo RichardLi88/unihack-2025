@@ -3,7 +3,8 @@ import "../css/Timetable.css";
 import { PageContext } from "../contexts/PageContext";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { getAllClasses } from "../utility/fetchClasses.js";
-import { FilterContext } from "../contexts/FilterContext";
+import { UnitContext } from "../contexts/UnitContext.jsx";
+
 /**
  * const data = [
   {
@@ -128,20 +129,7 @@ const Timetable = () => {
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
   const { editUnit, unitInfo } = useContext(PageContext);
-  const [classData, setClassData] = useState([]);
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        const data = await getAllClasses(10000000, 2025, 1);
-        setClassData(classData);
-        console.log(data);
-      } catch (err) {
-        console.log("error");
-      }
-    }
-    getData();
-  }, []);
+  const { units } = useContext(UnitContext);
 
   // Update the days array whenever the current week changes
   useEffect(() => {
@@ -154,32 +142,6 @@ const Timetable = () => {
     }));
     setDays(updatedDays);
   }, [currentWeekStart]);
-
-  //get the data of the unit
-  useEffect(() => {
-    if (editUnit !== -1) {
-      setClickedCells({});
-      const c = classData.filter((unit) => unit.unitcode === unitCode);
-      setClickedCells((prev) => {
-        const updatedCells = { ...prev };
-        console.log(c);
-        c.forEach((classItem) => {
-          for (
-            let hour = classItem.time;
-            hour < classItem.time + classItem.duration;
-            hour++
-          ) {
-            const cellKey = `${classItem.day}-${hour}`;
-            updatedCells[cellKey] = "class";
-          }
-        });
-
-        return updatedCells;
-      });
-    } else {
-      setClickedCells({});
-    }
-  }, [editUnit]);
 
   // Function to handle cell clicks
   const handleCellClick = (day, hour, isSelecting, event) => {
@@ -194,6 +156,45 @@ const Timetable = () => {
       console.log(rect);
     }
   };
+
+  useEffect(() => {
+    console.log("Editing unit:", editUnit);
+    if (units.length === 0) {
+      return;
+    }
+    if (editUnit !== -1) {
+      setClickedCells({});
+      const c = units
+        .filter((element) => {
+          return element.unitcode === unitInfo.unitcode;
+        })[0]
+        .classTypes.filter((type) => type.name === unitInfo.classType)[0];
+
+      const duration = c.duration;
+      const classes = c.classes;
+
+      console.log(duration);
+      console.log(classes);
+      setClickedCells((prev) => {
+        const updatedCells = { ...prev };
+
+        classes.forEach((classItem) => {
+          for (
+            let hour = parseInt(classItem.time / 100);
+            hour < classItem.time / 100 + duration;
+            hour++
+          ) {
+            const cellKey = `${classItem.day}-${hour}`;
+            updatedCells[cellKey] = "class";
+          }
+        });
+
+        return updatedCells;
+      });
+    } else {
+      setClickedCells({});
+    }
+  }, [editUnit]);
 
   // Function to handle mouse down event
   const handleMouseDown = (day, hour) => {
@@ -219,6 +220,9 @@ const Timetable = () => {
 
   // Function to navigate to the previous week
   const goToPreviousWeek = () => {
+    if (getWeekNumber(currentWeekStart) == "Week 1") {
+      return;
+    }
     const newStartDate = new Date(currentWeekStart);
     newStartDate.setDate(newStartDate.getDate() - 7);
     setCurrentWeekStart(newStartDate);
@@ -226,6 +230,9 @@ const Timetable = () => {
 
   // Function to navigate to the next week
   const goToNextWeek = () => {
+    if (getWeekNumber(currentWeekStart) == "Week 12") {
+      return;
+    }
     const newStartDate = new Date(currentWeekStart);
     newStartDate.setDate(newStartDate.getDate() + 7);
     setCurrentWeekStart(newStartDate);
@@ -244,7 +251,7 @@ const Timetable = () => {
         handleCellClick(
           { name: targetElement.dataset.day },
           parseInt(targetElement.dataset.hour, 10),
-          dragStartState
+          dragStartState,
         );
       }
     }
