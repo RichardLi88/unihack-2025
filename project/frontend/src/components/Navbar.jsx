@@ -10,9 +10,10 @@ import { PageContext } from "../contexts/PageContext";
 
 function Navbar() {
   const [selectedSemester, setSelectedSemester] = useState("Semester 1");
-  const { setEdit } = useContext(PageContext);
+  const { setEdit, setEditUnit } = useContext(PageContext);
 
   const handleEdit = () => {
+    setEditUnit(-1);
     setEdit((e) => !e);
   };
 
