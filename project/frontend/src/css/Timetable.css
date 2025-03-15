@@ -1,19 +1,24 @@
-.timetable-container {
+  .timetable-container {
     width: 100%;
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    user-select: none;
+
   }
-  
+
   .timetable {
     border-collapse: collapse;
     width: 80%;
     text-align: center;
+    font-size: 17px;
   }
   
   th, td {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 5px;
   }
   
   th {
@@ -21,5 +26,34 @@
   }
   
   .empty-slot {
-    height: 40px;
+    height: 20px;
+    /* cursor: pointer; */
   }
+
+  .empty-slot.clicked {
+    background-color: grey;
+  }
+
+  .week-header {
+  display: flex;
+  
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 80%;
+}
+
+.week-header p {
+  background-color: #ffffff00;
+  border: 0cqh solid;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  padding-top: 10px;
+  
+}
+
+.week-header button:hover {
+  background-color: #e0e0e0;
+}
