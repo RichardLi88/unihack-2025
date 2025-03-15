@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { Text, Button, Menu, Flex, ActionIcon, Image } from "@mantine/core";
+import { useLocation } from "react-router-dom"; // Import useLocation
 import {
   IconHelpCircle,
   IconChevronDown,
-  IconEdit,
 } from "@tabler/icons-react";
 import { PageContext } from "../contexts/PageContext";
 import { useNavigate } from "react-router";
@@ -26,6 +26,14 @@ function Navbar() {
       return !e
     });
   };
+  const location = useLocation(); // Get the current route
+
+  // Define routes where the Navbar should be hidden
+  const hiddenRoutes = ["/login", "/ForgotPassword"];
+
+  if (hiddenRoutes.includes(location.pathname)) {
+    return null; // Do not render Navbar on these pages
+  }
 
   return (
     <Flex
@@ -41,7 +49,7 @@ function Navbar() {
       </Button>
 
 
-      {/* Navbar Right Section - Items slightly closer spaced */}
+      {/* Navbar Right Section */}
       <Flex gap="md" align="center">
         <Button variant="subtle" color="gray.0" onClick={handleEdit}>
           {modeText}

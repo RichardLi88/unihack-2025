@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Flex, Text, Button, Accordion, AccordionItem } from "@mantine/core";
+import Lottie from "lottie-react";
+import grassAnimation from "../assets/help-background-animation.json"; // Import the Lottie animation
 import "../css/Help.css";
 
 export default function Help() {
@@ -24,24 +26,31 @@ export default function Help() {
   };
 
   return (
-    <Flex direction="column" align="center" className="help-container">
-      <Text className="help-title">Help & FAQ</Text>
-      <Accordion className="help-accordion">
-        {faq.map((item, index) => (
-          <AccordionItem key={index} label={item.question}>
-            <Text>{item.answer}</Text>
-          </AccordionItem>
-        ))}
-      </Accordion>
+    <div className="help-page">
+      <Flex direction="column" align="center" className="help-container">
+        <Text className="help-title">Help & FAQ</Text>
+        <Accordion className="help-accordion">
+          {faq.map((item, index) => (
+            <AccordionItem key={index} label={item.question}>
+              <Text>{item.answer}</Text>
+            </AccordionItem>
+          ))}
+        </Accordion>
 
-      {/* Timetable Help Form Button */}
-      <Button className="help-button" onClick={handleTimetableHelpForm}>
-        Timetable Help Form
-      </Button>
+        {/* Timetable Help Form Button */}
+        <Button className="help-button" onClick={handleTimetableHelpForm}>
+          Timetable Help Form
+        </Button>
 
-      <Button className="help-button" onClick={handleContactSupport}>
-        Contact Support
-      </Button>
-    </Flex>
+        <Button className="help-button" onClick={handleContactSupport}>
+          Contact Support
+        </Button>
+      </Flex>
+
+      {/* Grass Animation - Positioned Behind */}
+      <div className="help-animation-container">
+        <Lottie animationData={grassAnimation} className="help-animation" />
+      </div>
+    </div>
   );
 }
