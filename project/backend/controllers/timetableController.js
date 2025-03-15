@@ -1,4 +1,4 @@
-import Student from "../schemas/studentSchema.js";
+import { Student } from "../schemas/studentSchema.js";
 
 export const getTimetable = async (req, res) => {
   try {

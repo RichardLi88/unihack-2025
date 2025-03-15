@@ -1,11 +1,11 @@
-import studentSchema from "../schemas/studentSchema.js";
+import { Student } from "../schemas/studentSchema.js";
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = studentSchema.find(
-      (u) => u.username === username && u.password === password,
+    const user = Student.find(
+      (u) => u.username === username && u.password === password
     );
 
     if (!user)
