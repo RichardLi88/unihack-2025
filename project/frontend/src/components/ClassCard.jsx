@@ -1,7 +1,19 @@
+import { useState } from "react";
 import { Flex, Text } from "@mantine/core";
 import styles from "../css/Sidebar.module.css";
+import ClassModal from "./ClassModal";
 
 function ClassCard({ data }) {
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+
+  const handleCardClick = () => {
+    setIsModalOpen(true); 
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false); 
+  };
+
   return (
     <>
       <Flex
@@ -15,10 +27,14 @@ function ClassCard({ data }) {
         justify="space-between"
         align="center"
         className={styles["unit-card"]}
+        onClick={handleCardClick}
+        style={{ cursor: "pointer" }} 
       >
         <Text size="l">{data.classType}</Text>
         <Text size="sm">{data.classDuration}</Text>
       </Flex>
+
+      <ClassModal opened={isModalOpen} onClose={handleModalClose} data={data} />
     </>
   );
 }

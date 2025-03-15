@@ -1,8 +1,7 @@
   .timetable-container {
     width: 100%;
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; 
+    flex-direction: column; 
     margin-top: 20px; 
     margin-bottom: 20px;
     user-select: none;
@@ -27,7 +26,6 @@
   
   .empty-slot {
     height: 20px;
-    /* cursor: pointer; */
   }
 
   .empty-slot.clicked {
