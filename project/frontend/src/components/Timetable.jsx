@@ -77,11 +77,7 @@ const Timetable = () => {
 
   //get the data of the unit
   useEffect(() => {
-    if (editUnit === -1) {
-      return;
-    }
-    //do something like await call_backend_to_get_classes(editUnit)
-    if (editUnit == 123) {
+    if (editUnit === 123) {
       setClickedCells((prev) => {
         const updatedCells = { ...prev };
 
@@ -98,8 +94,25 @@ const Timetable = () => {
 
         return updatedCells;
       });
+    } else {
+      setClickedCells((prev) => {
+        const updatedCells = { ...prev };
+
+        data.forEach((classItem) => {
+          for (
+            let hour = classItem.time;
+            hour < classItem.time + classItem.duration;
+            hour++
+          ) {
+            const cellKey = `${classItem.day}-${hour}`;
+            updatedCells[cellKey] = false;
+          }
+        });
+
+        return updatedCells; // ✅ Fixed missing return
+      });
     }
-  }, [editUnit]);
+  }, [editUnit]); // ✅ Added `data` dependency
 
   // Function to handle cell clicks
   const handleCellClick = (day, hour, isSelecting) => {
