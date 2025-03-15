@@ -1,5 +1,10 @@
-import { Flex, ScrollArea } from "@mantine/core";
+import { Button, Flex, ScrollArea } from "@mantine/core";
 import Unit from "./Unit";
+import { IconSparkles } from "@tabler/icons-react";
+import { useContext } from "react";
+import { PageContext } from "../contexts/PageContext";
+import PlannerFeatures from "./PlannerFeatures";
+
 const units = [
   {
     unitCode: "FIT3171",
@@ -18,7 +23,7 @@ const units = [
     ],
   },
   {
-    unitCode: "FIT3171",
+    unitCode: "FIT2099",
     unitName: "Databases",
     classes: [
       {
@@ -34,7 +39,7 @@ const units = [
     ],
   },
   {
-    unitCode: "FIT3171",
+    unitCode: "FIT3159",
     unitName: "Databases",
     classes: [
       {
@@ -52,6 +57,7 @@ const units = [
 ];
 
 function Sidebar() {
+  const { page } = useContext(PageContext);
   return (
     <Flex
       direction="column"
@@ -62,6 +68,7 @@ function Sidebar() {
       py="20px"
     >
       <ScrollArea w="100%">
+        {page === "planner" && <PlannerFeatures />}
         {units.map((unit) => {
           return <Unit key={unit.unitCode} data={unit} />;
         })}
