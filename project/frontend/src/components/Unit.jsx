@@ -29,9 +29,14 @@ function Unit({ data, color }) {
             w="100%"
             style={transitionStyles}
           >
-            {data.classes.map((c) => (
-              <ClassCard key={c.cl_id} data={c} />
-            ))}
+            {data.classes.map((c) => {
+              return (
+                <ClassCard
+                  key={c.cl_id}
+                  data={{ ...c, unitCode: data.unitCode }}
+                />
+              );
+            })}
           </Flex>
         )}
       </Transition>

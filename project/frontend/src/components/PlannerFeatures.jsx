@@ -26,6 +26,7 @@ function PlannerFeatures() {
         h="100px"
         w="90%"
         onClick={onCreateClicked}
+        fz="20px"
         rightSection={<IconSparkles />}
       >
         Generate for me!
@@ -38,6 +39,7 @@ function PlannerFeatures() {
         </Text>
         <Slider
           w="100%"
+          my="10px"
           value={hours}
           onChange={setHours}
           color="purple"
