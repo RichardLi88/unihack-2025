@@ -1,21 +1,24 @@
 import { useContext, useState } from "react";
+import { useLocation } from "react-router-dom"; // Import useLocation
 import { Text, Button, Menu, Flex, ActionIcon } from "@mantine/core";
 import {
   IconSettings,
   IconHelpCircle,
   IconChevronDown,
-  IconEdit,
 } from "@tabler/icons-react";
 import { PageContext } from "../contexts/PageContext";
 
 function Navbar() {
   const [selectedSemester, setSelectedSemester] = useState("Semester 1");
   const { setEdit, setEditUnit } = useContext(PageContext);
+  const location = useLocation(); // Get the current route
 
-  const handleEdit = () => {
-    setEditUnit(-1);
-    setEdit((e) => !e);
-  };
+  // Define routes where the Navbar should be hidden
+  const hiddenRoutes = ["/login", "/ForgotPassword"];
+
+  if (hiddenRoutes.includes(location.pathname)) {
+    return null; // Do not render Navbar on these pages
+  }
 
   return (
     <Flex
@@ -30,9 +33,9 @@ function Navbar() {
         Allocate++
       </Text>
 
-      {/* Navbar Right Section - Items slightly closer spaced */}
+      {/* Navbar Right Section */}
       <Flex gap="md" align="center">
-        <Button variant="subtle" color="gray.0" onClick={handleEdit}>
+        <Button variant="subtle" color="gray.0" onClick={() => setEdit((e) => !e)}>
           Edit
         </Button>
 
