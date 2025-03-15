@@ -17,9 +17,8 @@ const classSchema = new mongoose.Schema({
     required: true,
   },
   day: {
-    type: String,
+    type: Number, // 0=mon, 4=fri
     required: true,
-    enum: ["mon", "tue", "wed", "thu", "fri"],
   },
   time: {
     type: Number, // start time in 24h format

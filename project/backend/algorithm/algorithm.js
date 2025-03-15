@@ -8,7 +8,22 @@ function hasConflict(c1, c2) {
 }
 
 /** Returns true if can allocate `selected` given `allocated` */
-function isValidAllocation(allocated, selected) {
+function isValidAllocation(allocated, selected, maxHoursPerDay) {
+  function getClassDuration(c) {
+    return (c.end - c.start) / 100;
+  }
+
+  // validate total hours < max hours per day
+  let total_hrs =
+    getClassDuration(selected) +
+    Object.values(allocated)
+      .filter((c) => c.day == selected.day)
+      .reduce((s, e) => s + getClassDuration(e), 0);
+
+  if (total_hrs > maxHoursPerDay) {
+    return false;
+  }
+
   for (let assignedClass of Object.values(allocated)) {
     if (hasConflict(assignedClass, selected)) {
       return false;
@@ -30,7 +45,7 @@ function isValidAllocation(allocated, selected) {
  *     classes: [ { id, day, start, end } ]
  *   }]
  */
-function backtrack(allocations, classOfferings) {
+function backtrack(allocations, classOfferings, maxHoursPerDay) {
   // valid schedule found
   if (Object.keys(allocations).length == classOfferings.length) {
     return allocations;
@@ -42,9 +57,9 @@ function backtrack(allocations, classOfferings) {
     .sort((a, b) => a.classes.length - b.classes.length)[0];
 
   for (let c of nextOffering.classes) {
-    if (isValidAllocation(allocations, c)) {
+    if (isValidAllocation(allocations, c, maxHoursPerDay)) {
       allocations[nextOffering.id] = c; // choose this class
-      let result = backtrack(allocations, classOfferings);
+      let result = backtrack(allocations, classOfferings, maxHoursPerDay);
       if (result) return result; // return if valid allocation
       delete allocations[nextOffering.id]; // backtrack if failed
     }
@@ -54,7 +69,7 @@ function backtrack(allocations, classOfferings) {
   return null;
 }
 
-function generateTimetable(offerings) {
+function generateTimetable(offerings, maxHoursPerDay) {
   let classOfferings = [];
   for (let o of offerings) {
     for (let ct of o.classTypes) {
@@ -66,57 +81,57 @@ function generateTimetable(offerings) {
     }
   }
 
-  return backtrack({}, classOfferings);
+  return backtrack({}, classOfferings, maxHoursPerDay);
 }
 
 // ========================================
 //                EXAMPLE!!!
 // ========================================
 
-// let offerings = [
-//   {
-//     unitcode: "FIT3159",
-//     classTypes: [
-//       {
-//         name: "workshop",
-//         duration: 1,
-//         classes: [
-//           { id: 1, day: "mon", start: 900 },
-//           { id: 2, day: "mon", start: 1100 },
-//         ],
-//       },
-//       {
-//         name: "applied",
-//         duration: 1,
-//         classes: [
-//           { id: 3, day: "mon", start: 900 },
-//           { id: 4, day: "mon", start: 1000 },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     unitcode: "FIT3077",
-//     classTypes: [
-//       {
-//         name: "workshop",
-//         duration: 1,
-//         classes: [
-//           { id: 1, day: "mon", start: 900 },
-//           { id: 2, day: "mon", start: 1100 },
-//         ],
-//       },
-//       {
-//         name: "applied",
-//         duration: 1,
-//         classes: [
-//           { id: 3, day: "tue", start: 900 },
-//           { id: 4, day: "tue", start: 1000 },
-//         ],
-//       },
-//     ],
-//   },
-// ];
-//
-// let solution = generateTimetable(offerings);
-// console.log(solution);
+let offerings = [
+  {
+    unitcode: "FIT3159",
+    classTypes: [
+      {
+        name: "workshop",
+        duration: 1,
+        classes: [
+          { id: 1, day: 0, start: 900 },
+          { id: 2, day: 0, start: 1100 },
+        ],
+      },
+      {
+        name: "applied",
+        duration: 1,
+        classes: [
+          { id: 3, day: 0, start: 900 },
+          { id: 4, day: 0, start: 1000 },
+        ],
+      },
+    ],
+  },
+  {
+    unitcode: "FIT3077",
+    classTypes: [
+      {
+        name: "workshop",
+        duration: 1,
+        classes: [
+          { id: 1, day: 0, start: 900 },
+          { id: 2, day: 0, start: 1100 },
+        ],
+      },
+      {
+        name: "applied",
+        duration: 1,
+        classes: [
+          { id: 3, day: 1, start: 900 },
+          { id: 4, day: 1, start: 1000 },
+        ],
+      },
+    ],
+  },
+];
+
+let solution = generateTimetable(offerings, 3);
+console.log(solution);
