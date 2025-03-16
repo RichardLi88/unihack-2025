@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import Lottie from "lottie-react";
@@ -8,27 +9,16 @@ import "../css/Login.css";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    setError("");
-
-    if (!email || !password) {
-      setError("Both fields are required");
-      return;
-    }
-
-    if (email === "user@example.com" && password === "password123") {
-      alert("Login successful!");
-    } else {
-      setError("Invalid email or password");
-    }
+    navigate("/HomePage"); // Redirects to HomePage upon clicking login
   };
 
   const handleForgotPassword = () => {
-    window.location.href = "/ForgotPassword.jsx";
+    navigate("/ForgotPassword"); // Redirects to Forgot Password page
   };
 
   return (
@@ -72,7 +62,6 @@ export default function Login() {
             Login
           </motion.h2>
 
-          {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleLogin}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
