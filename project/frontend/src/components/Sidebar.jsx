@@ -6,47 +6,18 @@ import { PageContext } from "../contexts/PageContext";
 import PlannerFeatures from "./PlannerFeatures";
 import { UnitContext } from "../contexts/UnitContext";
 import { getAllClasses } from "../utility/fetchClasses";
-
-const units = [
-  {
-    unitCode: "FIT3171",
-    unitName: "Databases",
-    classes: [
-      { cl_id: 123, classType: "Seminar", classDuration: "1hr" },
-      { cl_id: 124, classType: "Applied", classDuration: "2hr" },
-    ],
-  },
-  {
-    unitCode: "FIT2099",
-    unitName: "Java OOP",
-    classes: [
-      { cl_id: 125, classType: "Lecture", classDuration: "1.5hr" },
-      { cl_id: 126, classType: "Workshop", classDuration: "2hr" },
-    ],
-  },
-  {
-    unitCode: "FIT3159",
-    unitName: "Computer Architecture",
-    classes: [
-      { cl_id: 127, classType: "Lab", classDuration: "3hr" },
-      { cl_id: 128, classType: "Tutorial", classDuration: "1hr" },
-    ],
-  },
-  {
-    unitCode: "FIT1051",
-    unitName: "AI & ML",
-    classes: [
-      { cl_id: 129, classType: "Lecture", classDuration: "2hr" },
-      { cl_id: 130, classType: "Practical", classDuration: "1.5hr" },
-    ],
-  },
-];
+import { FilterContext } from "../contexts/FilterContext";
 
 const colors = ["#D6E5F3", "#DBE9D4", "#F8E3F7", "#FFFCCC"]; // Light blue, green, yellow, red
 
 function Sidebar() {
   const { edit } = useContext(PageContext);
   const { units, getUnits } = useContext(UnitContext);
+  const { setClearCount } = useContext(FilterContext)
+
+  const handleClearClick = () => {
+    setClearCount(prev => prev + 1)
+  }
 
   useEffect(() => {
     async function getU() {
@@ -69,6 +40,13 @@ function Sidebar() {
         {units.map((unit, index) => {
           return <Unit key={index} data={unit} color={colors[index]} />;
         })}
+        {edit &&
+          <Flex justify="center" w="100%" py="20px">
+            <Button variant="filled" bg="red" w="90%" onClick={handleClearClick}>
+              Clear Timetable
+            </Button>
+          </Flex>
+        }
       </ScrollArea>
     </Flex>
   );

@@ -2,28 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import "../css/Timetable.css";
 import { PageContext } from "../contexts/PageContext";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
-import { getAllClasses, getClassInfo } from "../utility/fetchClasses.js";
+import { getClassInfo } from "../utility/fetchClasses.js";
 import { UnitContext } from "../contexts/UnitContext.jsx";
 import { FilterContext } from "../contexts/FilterContext.jsx";
 import { ScrollArea } from "@mantine/core";
-
-const data = [
-  {
-    day: "MON",
-    duration: 2,
-    time: 18,
-  },
-  {
-    day: "WED",
-    duration: 2,
-    time: 12,
-  },
-  {
-    day: "FRI",
-    duration: 2,
-    time: 13,
-  },
-];
 
 // Function to get the dates for the current week
 const getCurrentWeekDates = (startDate) => {
@@ -64,10 +46,10 @@ const Timetable = () => {
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); // Start of the current week (Monday)
   const [days, setDays] = useState([]); // Dynamically generated days array
   // const [clickedCells, setClickedCells] = useState({}); // State to track clicked cells
-  const { clickedCells, setClickedCells, preferenceClasses } = useContext(FilterContext);
+  const { clickedCells, setClickedCells, preferenceClasses, setPreferenceClasses, clearCount } = useContext(FilterContext);
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
-  const { editUnit, unitInfo: classInfo } = useContext(PageContext);
+  const { editUnit, setEditUnit, unitInfo: classInfo } = useContext(PageContext);
   const { units } = useContext(UnitContext);
 
   // Update the days array whenever the current week changes
@@ -83,13 +65,34 @@ const Timetable = () => {
   }, [currentWeekStart]);
 
   useEffect(() => {
+    // reset cells
+    for (const day of ["MON", "TUE", "WED", "THU", "FRI"]) {
+      for (let i = 8; i < 22; i++) {
+        const cell = getCellById(`${day}-${i}`);
+        if (cell == null) return
+        cell.classList.remove(`classCell${cell.innerText.substring(0, 4)}`);
+        cell.innerText = "";
+      }
+    }
+  }, [clearCount])
+
+  useEffect(() => {
+    // reset cells
+    for (const day of ["MON", "TUE", "WED", "THU", "FRI"]) {
+      for (let i = 8; i < 22; i++) {
+        const cell = getCellById(`${day}-${i}`);
+        if (cell == null) return
+        cell.classList.remove(`classCell${cell.innerText.substring(0, 4)}`);
+        cell.innerText = "";
+      }
+    }
     for (const cid of preferenceClasses) {
       setTextOnCellById(cid)
     }
   }, [preferenceClasses])
 
   // Function to handle cell clicks
-  const handleCellClick = (day, hour, isSelecting, event) => {
+  const handleCellClick = (day, hour, isSelecting) => {
     const cellKey = `${day.name}-${hour}`;
     if (clickedCells[cellKey] !== "class") {
       setClickedCells((prev) => ({
@@ -100,13 +103,27 @@ const Timetable = () => {
       const cell = getCellById(cellKey);
       const classId = cell.getAttribute("class-id");
       setTextOnCellById(classId);
+      setEditUnit(-1)
     }
   };
 
+  const resetCellsWithText = (text) => {
+    for (const key of Object.keys(clickedCells)) {
+      const cell = getCellById(key);
+      if (cell.innerText == text) {
+        cell.classList.remove(`classCell${cell.innerText.substring(0, 4)}`);
+        cell.innerText = "";
+      }
+    }
+  }
+
+
   async function setTextOnCellById(classId) {
     const classInfo = await getClassInfo(classId)
-
     const text = `${classInfo.unitcode} ${classInfo.classType}`;
+
+    resetCellsWithText(text)
+
     for (
       let i = classInfo.time / 100;
       i < parseInt(classInfo.time / 100 + classInfo.duration);
@@ -115,6 +132,12 @@ const Timetable = () => {
       const cellKey = `${classInfo.day}-${i}`;
       const cell = getCellById(cellKey);
       cell.innerText = text;
+      for (const c of cell.classList) {
+        if (c.startsWith("classCell")) {
+          cell.classList.remove(c)
+        }
+      }
+      cell.classList.add(`classCell${classInfo.unitcode}`)
     }
   }
 
@@ -123,6 +146,7 @@ const Timetable = () => {
       return;
     }
     if (editUnit !== -1) {
+      setClickedCells({});
       const c = units
         .filter((element) => {
           return element.unitcode === classInfo.unitcode;
@@ -142,10 +166,11 @@ const Timetable = () => {
             hour++
           ) {
             const cellKey = `${classItem.day}-${hour}`;
-            updatedCells[cellKey] = "class";
-
             const cellId = getCellById(cellKey);
+
+            updatedCells[cellKey] = "class";
             cellId.setAttribute("class-id", classItem.class_id);
+
           }
         });
 
@@ -158,7 +183,6 @@ const Timetable = () => {
 
   const getCellById = (cellKey) => {
     const cell = document.getElementById(cellKey);
-    console.log(cell); // Logs the <td> element
     return cell;
   };
 
@@ -280,7 +304,7 @@ const Timetable = () => {
                       key={cellKey}
                       id={cellKey}
                       className={`empty-slot ${isClicked && isClicked !== "class" ? "clicked" : ""
-                        } ${isClicked === "class" ? "class-time" : ""}`}
+                        } ${isClicked === "class" ? "class-time" : ""} `}
                       onMouseDown={(e) => handleMouseDown(day, hour, e)}
                       onMouseOver={() => handleMouseOver(day, hour, cellKey)}
                       onMouseUp={handleMouseUp}
