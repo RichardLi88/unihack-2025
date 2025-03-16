@@ -27,7 +27,7 @@ function Navbar() {
   const location = useLocation(); // Get the current route
 
   // Define routes where the Navbar should be hidden
-  const hiddenRoutes = ["/login", "/ForgotPassword"];
+  const hiddenRoutes = ["/login", "/forgotpassword"];
 
   if (hiddenRoutes.includes(location.pathname)) {
     return null; // Do not render Navbar on these pages
