@@ -8,17 +8,17 @@ import AllocateLogo from "../assets/allocate_logo.svg";
 
 function Navbar() {
   const [selectedSemester, setSelectedSemester] = useState("Semester 1");
-  const [modeText, setModeText] = useState("Edit");
+  const [modeText, setModeText] = useState("UPDATE PREFERENCES");
   const { setEdit, setEditUnit } = useContext(PageContext);
   const navigate = useNavigate();
 
   const handleEdit = () => {
     setEditUnit(-1);
     setEdit((e) => {
-      if (modeText == "Edit") {
-        setModeText("Save");
+      if (modeText == "UPDATE PREFERENCES") {
+        setModeText("SAVE CHANGES");
       } else {
-        setModeText("Edit");
+        setModeText("UPDATE PREFERENCES");
       }
       return !e;
     });
@@ -65,8 +65,10 @@ function Navbar() {
 
       {/* Navbar Right Section */}
       <Flex gap="md" align="center">
-        <Button variant="subtle" color="gray.0" onClick={handleEdit}>
+        <Button color="#ebebeb" onClick={handleEdit} >
+          <font color = "black">
           {modeText}
+          </font>
         </Button>
 
         {/* Semester Selection Dropdown */}
