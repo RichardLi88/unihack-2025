@@ -7,7 +7,7 @@ function UnitCard({ data, color, onClick }) {
       <Flex
         direction="column"
         bg={color}
-        h="60px"
+        h="3rem"
         w="90%"
         style={{ cursor: "pointer" }}
         justify="center"
@@ -15,7 +15,7 @@ function UnitCard({ data, color, onClick }) {
         onClick={onClick}
         className={styles["unit-card"]}
       >
-        <Text size="xl" fw={500}>
+        <Text size="lg" fw={600}>
           {data.unitcode}
         </Text>
         <Text size="md">{data.name}</Text>

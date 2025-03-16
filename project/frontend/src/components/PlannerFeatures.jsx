@@ -2,10 +2,10 @@ import { Button, Flex, Text, Slider } from "@mantine/core";
 import { IconSparkles } from "@tabler/icons-react";
 import { useContext } from "react";
 import { FilterContext } from "../contexts/FilterContext";
-import { getGeneratedTimetable } from "../backend_utility/getGeneratedTimetable";
+import { getGeneratedTimetable } from "../utility/getGeneratedTimetable.js";
 
 function PlannerFeatures() {
-  const { hours, setHours, clickedCells, setGeneratedSchedule } =
+  const { hours, setHours, clickedCells } =
     useContext(FilterContext);
 
   const onCreateClicked = async (e) => {
@@ -34,19 +34,19 @@ function PlannerFeatures() {
         w="90%"
         onClick={onCreateClicked}
         fz="20px"
+        mb="2rem"
         rightSection={<IconSparkles />}
       >
         Generate for me!
       </Button>
 
-      <Flex direction="column" align="center" w="90%">
-        <Text size="sm" mb="xs">
-          Max Hours of Class per Day:{<br />}
-          {hours} hours
+      <Flex direction="column" justify="flex-start" align="flex-start" w="90%">
+        <Text size="sm" mb="xs" fz="md">
+          Max Hours of Class Per Day:
         </Text>
         <Slider
           w="100%"
-          my="10px"
+          mb="2rem"
           value={hours}
           onChange={setHours}
           color="purple"

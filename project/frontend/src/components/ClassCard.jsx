@@ -41,10 +41,10 @@ function ClassCard({ data }) {
         )}
         <Flex
           direction="row"
-          bg="#BDBDBD"
+          bg="#D9D9D9"
           h="40px"
           mt="10px"
-          w="60%"
+          w="75%"
           mx="5%"
           px="10px"
           justify="space-between"
