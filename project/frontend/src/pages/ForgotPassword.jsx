@@ -78,7 +78,7 @@ function ForgotPassword() {
 
           <motion.button 
             className="forgot-password-button"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
             animate={{ y: [0, -5, 0] }} 
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
