@@ -34,19 +34,19 @@ function PlannerFeatures() {
         w="90%"
         onClick={onCreateClicked}
         fz="20px"
+        mb="2rem"
         rightSection={<IconSparkles />}
       >
         Generate for me!
       </Button>
 
-      <Flex direction="column" align="center" w="90%">
-        <Text size="sm" mb="xs">
-          Max Hours of Class per Day:{<br />}
-          {hours} hours
+      <Flex direction="column" justify="flex-start" align="flex-start" w="90%">
+        <Text size="sm" mb="xs" fz="md">
+          Max Hours in One Day:
         </Text>
         <Slider
           w="100%"
-          my="10px"
+          mb="2rem"
           value={hours}
           onChange={setHours}
           color="purple"
