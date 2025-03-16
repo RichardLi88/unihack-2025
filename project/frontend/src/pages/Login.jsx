@@ -14,7 +14,7 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    navigate("/HomePage"); // Redirects to HomePage upon clicking login
+    navigate("/"); // Redirects to HomePage upon clicking login
   };
 
   const handleForgotPassword = () => {
