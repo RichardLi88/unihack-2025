@@ -13,7 +13,8 @@ function ClassCard({ data }) {
   };
   console.log(data);
   const { getUnits } = useContext(UnitContext);
-  const { edit, editUnit, setEditUnit, setUnitInfo } = useContext(PageContext);
+  const { edit, editUnit, setEditUnit, setUnitInfo, unitInfo } =
+    useContext(PageContext);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -25,7 +26,12 @@ function ClassCard({ data }) {
       setUnitInfo("");
     } else {
       setEditUnit(data._id);
-      setUnitInfo({ unitcode: data.unitcode, classType: data.name });
+      setUnitInfo({
+        unitcode: data.unitcode,
+        classType: data.name,
+        duration: data.duration,
+        classes: data.classes,
+      });
       await getUnits();
     }
   };
