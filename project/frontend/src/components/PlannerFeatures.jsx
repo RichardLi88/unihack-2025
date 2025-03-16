@@ -2,10 +2,10 @@ import { Button, Flex, Text, Slider } from "@mantine/core";
 import { IconSparkles } from "@tabler/icons-react";
 import { useContext } from "react";
 import { FilterContext } from "../contexts/FilterContext";
-import { getGeneratedTimetable } from "../backend_utility/getGeneratedTimetable";
+import { getGeneratedTimetable } from "../utility/getGeneratedTimetable.js";
 
 function PlannerFeatures() {
-  const { hours, setHours, clickedCells, setGeneratedSchedule } =
+  const { hours, setHours, clickedCells } =
     useContext(FilterContext);
 
   const onCreateClicked = async (e) => {
