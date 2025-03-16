@@ -42,7 +42,7 @@ const units = [
   },
 ];
 
-const colors = ["#64B5F6", "#81C784", "#FFD54F", "#E57373"]; // Light blue, green, yellow, red
+const colors = ["#D6E5F3", "#DBE9D4", "#F8E3F7", "#FFFCCC"]; // Light blue, green, yellow, red
 
 function Sidebar() {
   const { edit } = useContext(PageContext);
@@ -59,7 +59,7 @@ function Sidebar() {
     <Flex
       direction="column"
       align="center"
-      w="15%"
+      w="25%"
       bg="#F5F5F5"
       h="100vh"
       py="20px"
