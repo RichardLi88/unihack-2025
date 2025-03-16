@@ -101,7 +101,6 @@ const Timetable = () => {
       return;
     }
     if (editUnit !== -1) {
-      setClickedCells({});
       const c = units
         .filter((element) => {
           return element.unitcode === unitInfo.unitcode;
