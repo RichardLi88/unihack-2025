@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "../css/Timetable.css";
 import { PageContext } from "../contexts/PageContext";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
-import { getAllClasses } from "../utility/fetchClasses.js";
+import { getAllClasses, getClassInfo } from "../utility/fetchClasses.js";
 import { UnitContext } from "../contexts/UnitContext.jsx";
 import { FilterContext } from "../contexts/FilterContext.jsx";
 
@@ -96,7 +96,11 @@ const Timetable = () => {
     }
   };
 
-  function setTextOnCellById(classId) {
+  async function setTextOnCellById(classId) {
+    const classInfo = await getClassInfo(classId)
+    console.log("============= CLASS INFO")
+    console.log(classInfo)
+
     let selectedClass;
     unitInfo.classes.forEach((c) => {
       if (c.class_id == classId) {
@@ -282,9 +286,8 @@ const Timetable = () => {
                   <td
                     key={cellKey}
                     id={cellKey}
-                    className={`empty-slot ${
-                      isClicked && isClicked !== "class" ? "clicked" : ""
-                    } ${isClicked === "class" ? "class-time" : ""}`}
+                    className={`empty-slot ${isClicked && isClicked !== "class" ? "clicked" : ""
+                      } ${isClicked === "class" ? "class-time" : ""}`}
                     onMouseDown={(e) => handleMouseDown(day, hour, e)}
                     onMouseOver={() => handleMouseOver(day, hour, cellKey)}
                     onMouseUp={handleMouseUp}
