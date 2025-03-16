@@ -5,7 +5,7 @@ import { FilterContext } from "../contexts/FilterContext";
 import { getGeneratedTimetable } from "../utility/getGeneratedTimetable.js";
 
 function PlannerFeatures() {
-  const { hours, setHours, clickedCells } =
+  const { hours, setHours, clickedCells, setPreferenceClasses } =
     useContext(FilterContext);
 
   const onCreateClicked = async (e) => {
@@ -18,6 +18,13 @@ function PlannerFeatures() {
         clickedCells,
         hours,
       );
+
+      const newClasses = []
+      for (const c of Object.values(response)) {
+        newClasses.push(c.class_id);
+      }
+      setPreferenceClasses(newClasses);
+
       console.log("generated timetable:");
       console.log(response);
     } catch (err) {

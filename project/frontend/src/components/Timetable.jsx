@@ -64,7 +64,7 @@ const Timetable = () => {
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); // Start of the current week (Monday)
   const [days, setDays] = useState([]); // Dynamically generated days array
   // const [clickedCells, setClickedCells] = useState({}); // State to track clicked cells
-  const { clickedCells, setClickedCells } = useContext(FilterContext);
+  const { clickedCells, setClickedCells, preferenceClasses } = useContext(FilterContext);
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
   const { editUnit, unitInfo: classInfo } = useContext(PageContext);
@@ -81,6 +81,12 @@ const Timetable = () => {
     }));
     setDays(updatedDays);
   }, [currentWeekStart]);
+
+  useEffect(() => {
+    for (const cid of preferenceClasses) {
+      setTextOnCellById(cid)
+    }
+  }, [preferenceClasses])
 
   // Function to handle cell clicks
   const handleCellClick = (day, hour, isSelecting, event) => {
