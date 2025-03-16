@@ -90,10 +90,35 @@ const Timetable = () => {
         [cellKey]: isSelecting,
       }));
     } else if (clickedCells[cellKey] === "class") {
-      const rect = event.target.getBoundingClientRect();
-      console.log(rect);
+      const cell = getCellById(cellKey);
+      const classId = cell.getAttribute("class-id");
+      setTextOnCellById(classId);
     }
   };
+
+  function setTextOnCellById(classId) {
+    let selectedClass;
+    unitInfo.classes.forEach((c) => {
+      if (c.class_id == classId) {
+        console.log("here");
+        selectedClass = c;
+      }
+    });
+    console.log("selected class", selectedClass);
+
+    const text = `${unitInfo.unitcode} ${unitInfo.classType}`;
+    for (
+      let i = selectedClass.time / 100;
+      i < parseInt(selectedClass.time / 100 + unitInfo.duration);
+      i++
+    ) {
+      const cellKey = `${selectedClass.day}-${i}`;
+      console.log(cellKey);
+      console.log(cellKey);
+      const cell = getCellById(cellKey);
+      cell.innerText = text;
+    }
+  }
 
   useEffect(() => {
     console.log("Editing unit:", editUnit);
@@ -123,6 +148,9 @@ const Timetable = () => {
           ) {
             const cellKey = `${classItem.day}-${hour}`;
             updatedCells[cellKey] = "class";
+
+            const cellId = getCellById(cellKey);
+            cellId.setAttribute("class-id", classItem.class_id);
           }
         });
 
@@ -132,6 +160,12 @@ const Timetable = () => {
       setClickedCells({});
     }
   }, [editUnit]);
+
+  const getCellById = (cellKey) => {
+    const cell = document.getElementById(cellKey);
+    console.log(cell); // Logs the <td> element
+    return cell;
+  };
 
   // Function to handle mouse down event
   const handleMouseDown = (day, hour) => {
@@ -247,8 +281,10 @@ const Timetable = () => {
                 return (
                   <td
                     key={cellKey}
-                    className={`empty-slot ${isClicked && isClicked !== "class" ? "clicked" : ""
-                      } ${isClicked === "class" ? "class-time" : ""}`}
+                    id={cellKey}
+                    className={`empty-slot ${
+                      isClicked && isClicked !== "class" ? "clicked" : ""
+                    } ${isClicked === "class" ? "class-time" : ""}`}
                     onMouseDown={(e) => handleMouseDown(day, hour, e)}
                     onMouseOver={() => handleMouseOver(day, hour, cellKey)}
                     onMouseUp={handleMouseUp}
