@@ -84,7 +84,7 @@ function Navbar() {
             <Menu.Item onClick={() => setSelectedSemester("Semester 1")}>
               Semester 1
             </Menu.Item>
-            <Menu.Item onClick={() => setSelectedSemester("Semester 2")}>
+            <Menu.Item onClick={() => setSelectedSemester("Semester 2")} disabled>
               Semester 2
             </Menu.Item>
           </Menu.Dropdown>
