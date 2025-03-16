@@ -14,13 +14,20 @@ export const UnitProvider = ({ children }) => {
       // all classes for units that the student is currently enrolled in
       const allClassesForEnrolledUnits = await getAllClasses(10000000, 2025, 1);
       setAllClassesForEnrolledUnits(allClassesForEnrolledUnits);
+      // maintain current enrolled units, even if no classes enrolled yet
+      for (const offering of allClassesForEnrolledUnits) {
+        if (!semesterEnrolment[offering.unitcode]) {
+          semesterEnrolment[offering.unitcode] = []
+        }
+      }
     } catch (err) {
-      console.log("error");
+      console.log("error: ", err);
     }
   }
 
   return (
-    <UnitContext.Provider value={{ allClassesForEnrolledUnits, getAllClassesForEnrolledUnits, semesterEnrolment, setSemesterEnrolment }}>
+    <UnitContext.Provider
+      value={{ allClassesForEnrolledUnits, getAllClassesForEnrolledUnits, semesterEnrolment, setSemesterEnrolment }}>
       {children}
     </UnitContext.Provider>
   );

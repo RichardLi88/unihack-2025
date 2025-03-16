@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
-import { Text, Button, Menu, Flex, ActionIcon, Image } from "@mantine/core";
+import { Button, Menu, Flex, ActionIcon, Image } from "@mantine/core";
 import { useLocation } from "react-router-dom"; // Import useLocation
 import { IconHelpCircle, IconChevronDown } from "@tabler/icons-react";
 import { PageContext } from "../contexts/PageContext";
+import { UnitContext } from "../contexts/UnitContext.jsx";
+import { saveTimetable } from "../utility/saveTimetable.js"
 import { useNavigate } from "react-router";
 import AllocateLogo from "../assets/allocate_logo.svg";
 
@@ -10,6 +12,8 @@ function Navbar() {
   const [selectedSemester, setSelectedSemester] = useState("Semester 1");
   const [modeText, setModeText] = useState("Edit");
   const { setEdit, setEditUnit } = useContext(PageContext);
+  const { semesterEnrolment } = useContext(UnitContext);
+
   const navigate = useNavigate();
 
   const handleEdit = () => {
@@ -18,6 +22,7 @@ function Navbar() {
       if (modeText == "Edit") {
         setModeText("Save");
       } else {
+        saveTimetable(10000000, 2025, 1, semesterEnrolment)
         setModeText("Edit");
       }
       return !e;

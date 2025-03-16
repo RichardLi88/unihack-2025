@@ -13,9 +13,9 @@ function App() {
   return (
     <>
       <PageProvider>
-        <Navbar />
         <FilterProvider>
           <UnitProvider>
+            <Navbar />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/help" element={<Help />} />

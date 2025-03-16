@@ -555,19 +555,11 @@ const dummyStudents = [
         unitEnrolment: [
           {
             unitcode: "FIT3171",
-            classes: [1, 4],
+            classes: [3171202511, 3171202512],
           },
-          { unitcode: "FIT2004", classes: [] },
+          { unitcode: "FIT2004", classes: [2004202511] },
           { unitcode: "FIT2099", classes: [] },
           { unitcode: "FIT2100", classes: [] },
-        ],
-      },
-      {
-        year: 2025,
-        semester: 2,
-        unitEnrolment: [
-          { unitcode: "FIT3134", classes: [] },
-          { unitcode: "FIT3077", classes: [] },
         ],
       },
     ],
