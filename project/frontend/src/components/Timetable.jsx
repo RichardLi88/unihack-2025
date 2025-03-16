@@ -67,7 +67,7 @@ const Timetable = () => {
   const { clickedCells, setClickedCells } = useContext(FilterContext);
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
-  const { editUnit, unitInfo } = useContext(PageContext);
+  const { editUnit, unitInfo: classInfo } = useContext(PageContext);
   const { units } = useContext(UnitContext);
 
   // Update the days array whenever the current week changes
@@ -99,49 +99,33 @@ const Timetable = () => {
 
   async function setTextOnCellById(classId) {
     const classInfo = await getClassInfo(classId)
-    console.log("============= CLASS INFO")
-    console.log(classInfo)
 
-    let selectedClass;
-    unitInfo.classes.forEach((c) => {
-      if (c.class_id == classId) {
-        console.log("here");
-        selectedClass = c;
-      }
-    });
-    console.log("selected class", selectedClass);
-
-    const text = `${unitInfo.unitcode} ${unitInfo.classType}`;
+    const text = `${classInfo.unitcode} ${classInfo.classType}`;
     for (
-      let i = selectedClass.time / 100;
-      i < parseInt(selectedClass.time / 100 + unitInfo.duration);
+      let i = classInfo.time / 100;
+      i < parseInt(classInfo.time / 100 + classInfo.duration);
       i++
     ) {
-      const cellKey = `${selectedClass.day}-${i}`;
-      console.log(cellKey);
-      console.log(cellKey);
+      const cellKey = `${classInfo.day}-${i}`;
       const cell = getCellById(cellKey);
       cell.innerText = text;
     }
   }
 
   useEffect(() => {
-    console.log("Editing unit:", editUnit);
     if (units.length === 0) {
       return;
     }
     if (editUnit !== -1) {
       const c = units
         .filter((element) => {
-          return element.unitcode === unitInfo.unitcode;
+          return element.unitcode === classInfo.unitcode;
         })[0]
-        .classTypes.filter((type) => type.name === unitInfo.classType)[0];
+        .classTypes.filter((type) => type.name === classInfo.classType)[0];
 
       const duration = c.duration;
       const classes = c.classes;
 
-      console.log(duration);
-      console.log(classes);
       setClickedCells((prev) => {
         const updatedCells = { ...prev };
 
@@ -248,60 +232,60 @@ const Timetable = () => {
   const weekNumber = getWeekNumber(currentWeekStart);
 
   return (
-    <ScrollArea w = "100%" h="100vh">
-    <div className="timetable-container" onMouseLeave={handleMouseUp}>
-      <div className="week-header">
-        <p onClick={goToPreviousWeek}>
-          <IconArrowNarrowLeft />
-        </p>
-        <span>{weekNumber} </span>
-        <p onClick={goToNextWeek}>
-          <IconArrowNarrowRight />
-        </p>
-      </div>
-      
-      <table className="timetable">
-        <thead>
-          <tr>
-            <th style={{ width: "9%" }}></th>
-            {days.map((day) => (
-              <th key={day.name} style={{ width: "18%" }}>
-                {day.name} <br /> {day.date}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {hours.map((hour) => (
-            <tr key={hour}>
-              <td>
-                {hour <= 11
-                  ? `${hour} AM`
-                  : hour === 12
-                    ? "12 PM"
-                    : `${hour - 12} PM`}
-              </td>
-              {days.map((day) => {
-                const cellKey = `${day.name}-${hour}`;
-                const isClicked = clickedCells[cellKey];
+    <ScrollArea w="100%" h="100vh">
+      <div className="timetable-container" onMouseLeave={handleMouseUp}>
+        <div className="week-header">
+          <p onClick={goToPreviousWeek}>
+            <IconArrowNarrowLeft />
+          </p>
+          <span>{weekNumber} </span>
+          <p onClick={goToNextWeek}>
+            <IconArrowNarrowRight />
+          </p>
+        </div>
 
-                return(
-                  <td
-                    key={cellKey}
-                    id={cellKey}
-                    className={`empty-slot ${isClicked && isClicked !== "class" ? "clicked" : ""
-                      } ${isClicked === "class" ? "class-time" : ""}`}
-                    onMouseDown={(e) => handleMouseDown(day, hour, e)}
-                    onMouseOver={() => handleMouseOver(day, hour, cellKey)}
-                    onMouseUp={handleMouseUp}
-                  ></td>
-                );
-              })}
+        <table className="timetable">
+          <thead>
+            <tr>
+              <th style={{ width: "9%" }}></th>
+              {days.map((day) => (
+                <th key={day.name} style={{ width: "18%" }}>
+                  {day.name} <br /> {day.date}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {hours.map((hour) => (
+              <tr key={hour}>
+                <td>
+                  {hour <= 11
+                    ? `${hour} AM`
+                    : hour === 12
+                      ? "12 PM"
+                      : `${hour - 12} PM`}
+                </td>
+                {days.map((day) => {
+                  const cellKey = `${day.name}-${hour}`;
+                  const isClicked = clickedCells[cellKey];
+
+                  return (
+                    <td
+                      key={cellKey}
+                      id={cellKey}
+                      className={`empty-slot ${isClicked && isClicked !== "class" ? "clicked" : ""
+                        } ${isClicked === "class" ? "class-time" : ""}`}
+                      onMouseDown={(e) => handleMouseDown(day, hour, e)}
+                      onMouseOver={() => handleMouseOver(day, hour, cellKey)}
+                      onMouseUp={handleMouseUp}
+                    ></td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </ScrollArea>
   );
 };

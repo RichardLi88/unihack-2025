@@ -35,6 +35,7 @@ export const getClassFromClassId = async (req, res) => {
       {
         $project: {
           "offerings.classTypes.classes": 1,
+          "offerings.classTypes.name": 1,
           "offerings.classTypes.duration": 1,
         },
       },
@@ -50,6 +51,7 @@ export const getClassFromClassId = async (req, res) => {
     const resultClass = result[0].offerings.classTypes.classes;
     resultClass.unitcode = classId.substring(0, 4);
     resultClass.duration = result[0].offerings.classTypes.duration;
+    resultClass.classType = result[0].offerings.classTypes.name;
 
     return res.status(200).json({ success: true, data: resultClass });
   } catch (err) {
