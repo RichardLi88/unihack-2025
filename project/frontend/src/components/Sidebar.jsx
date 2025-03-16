@@ -46,11 +46,11 @@ const colors = ["#D6E5F3", "#DBE9D4", "#F8E3F7", "#FFFCCC"]; // Light blue, gree
 
 function Sidebar() {
   const { edit } = useContext(PageContext);
-  const { units, getUnits } = useContext(UnitContext);
+  const { allClassesForEnrolledUnits, getAllClassesForEnrolledUnits } = useContext(UnitContext);
 
   useEffect(() => {
     async function getU() {
-      await getUnits();
+      await getAllClassesForEnrolledUnits();
     }
     getU();
   }, []);
@@ -66,7 +66,7 @@ function Sidebar() {
     >
       <ScrollArea w="100%">
         {edit && <PlannerFeatures />}
-        {units.map((unit, index) => {
+        {allClassesForEnrolledUnits.map((unit, index) => {
           return <Unit key={index} data={unit} color={colors[index]} />;
         })}
       </ScrollArea>

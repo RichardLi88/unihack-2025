@@ -12,7 +12,7 @@ function ClassCard({ data }) {
     setIsModalOpen(true);
   };
   console.log(data);
-  const { getUnits } = useContext(UnitContext);
+  const { getAllClassesForEnrolledUnits } = useContext(UnitContext);
   const { edit, editUnit, setEditUnit, setUnitInfo } = useContext(PageContext);
 
   const handleModalClose = () => {
@@ -26,7 +26,7 @@ function ClassCard({ data }) {
     } else {
       setEditUnit(data._id);
       setUnitInfo({ unitcode: data.unitcode, classType: data.name });
-      await getUnits();
+      await getAllClassesForEnrolledUnits();
     }
   };
 

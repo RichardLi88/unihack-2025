@@ -67,7 +67,7 @@ const Timetable = () => {
   const [isDragging, setIsDragging] = useState(false); // State to track if mouse is being dragged
   const [dragStartState, setDragStartState] = useState(null); // State to track the initial state of the starting cell
   const { editUnit, unitInfo } = useContext(PageContext);
-  const { units } = useContext(UnitContext);
+  const { allClassesForEnrolledUnits } = useContext(UnitContext);
 
   // Update the days array whenever the current week changes
   useEffect(() => {
@@ -97,12 +97,12 @@ const Timetable = () => {
 
   useEffect(() => {
     console.log("Editing unit:", editUnit);
-    if (units.length === 0) {
+    if (allClassesForEnrolledUnits.length === 0) {
       return;
     }
     if (editUnit !== -1) {
       setClickedCells({});
-      const c = units
+      const c = allClassesForEnrolledUnits
         .filter((element) => {
           return element.unitcode === unitInfo.unitcode;
         })[0]
