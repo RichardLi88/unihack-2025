@@ -12,9 +12,11 @@ Members:
 ✅ **Intuitive Design** – Sleek, user-friendly interface  
 ✅ **Full-Screen Optimization** – No longer viewing a tiny timetable on your screen  
 ✅ **Easy Unit Selection** – Seamless and efficient course picking  
-✅ **Smart Scheduling** – Advanced algorithms generate your perfect timetable based on your preferences  
+✅ **Smart Scheduling** – Advanced algorithms to generate your perfect timetable based on your preferences  
 
 ### 🔧 Tech Stack Used  
 - ⚡ **Node.js** & **Express.js** with **MongoDB** for the backend  
 - 🖥 **React.js** for the frontend  
 
+### Demonstration Below
+[Allocate++ Youtube Video!](https://youtu.be/aVmYLGQRIVA)
