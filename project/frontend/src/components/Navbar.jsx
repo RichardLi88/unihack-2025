@@ -41,6 +41,15 @@ function Navbar() {
       c="white"
       align="center"
       justify="space-between"
+      style={{ //fixed navbar position
+        position: "sticky",
+        top: 0,
+        width: "100%",
+        zIndex: 1000,
+      }}
+    
+    
+      
     >
       <Button
         variant="transparent"

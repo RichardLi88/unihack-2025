@@ -5,6 +5,7 @@ import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { getAllClasses } from "../utility/fetchClasses.js";
 import { UnitContext } from "../contexts/UnitContext.jsx";
 import { FilterContext } from "../contexts/FilterContext.jsx";
+import { ScrollArea } from "@mantine/core";
 
 const data = [
   {
@@ -210,6 +211,7 @@ const Timetable = () => {
   const weekNumber = getWeekNumber(currentWeekStart);
 
   return (
+    <ScrollArea w = "100%" h="100vh">
     <div className="timetable-container" onMouseLeave={handleMouseUp}>
       <div className="week-header">
         <p onClick={goToPreviousWeek}>
@@ -220,6 +222,7 @@ const Timetable = () => {
           <IconArrowNarrowRight />
         </p>
       </div>
+      
       <table className="timetable">
         <thead>
           <tr>
@@ -245,7 +248,7 @@ const Timetable = () => {
                 const cellKey = `${day.name}-${hour}`;
                 const isClicked = clickedCells[cellKey];
 
-                return (
+                return(
                   <td
                     key={cellKey}
                     className={`empty-slot ${isClicked && isClicked !== "class" ? "clicked" : ""
@@ -261,6 +264,7 @@ const Timetable = () => {
         </tbody>
       </table>
     </div>
+    </ScrollArea>
   );
 };
 
