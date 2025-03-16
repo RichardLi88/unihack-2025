@@ -81,6 +81,9 @@ function backtrack(allocations, classOfferings, maxHoursPerDay) {
  *     }
  *   }
  * ]
+ *
+ * Output format:
+ * { unitcode: [classId], ... }
  */
 function generateTimetable(offerings, maxHoursPerDay) {
   let classOfferings = [];
@@ -95,7 +98,18 @@ function generateTimetable(offerings, maxHoursPerDay) {
     }
   }
 
-  return backtrack({}, classOfferings, maxHoursPerDay);
+  const soln = backtrack({}, classOfferings, maxHoursPerDay);
+  // transform into required format
+  const res = {};
+  for (const key of Object.keys(soln)) {
+    const [ucode, _] = key.split(":");
+    if (!res[ucode]) {
+      res[ucode] = [];
+    }
+    res[ucode].push(soln[key].class_id);
+  }
+
+  return res;
 }
 
 export default generateTimetable;
