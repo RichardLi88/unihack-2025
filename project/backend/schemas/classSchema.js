@@ -4,9 +4,9 @@ import mongoose from "mongoose";
 
 const classSchema = new mongoose.Schema({
   class_id: {
+    // {unit}{year}{semester}{increment}
     type: Number,
     required: true,
-    unique: true, // unique within each offering
   },
   building: {
     type: String,

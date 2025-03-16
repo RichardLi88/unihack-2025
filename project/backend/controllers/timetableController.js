@@ -39,6 +39,14 @@ export const getTimetable = async (req, res) => {
   }
 };
 
+/**
+ * return format:
+ * [{unitcode, year, semester, classTypes: [
+ *   {name, duration, capacity, classes: [
+ *      {...classSchema}
+ *   ]}
+ * ]}]
+ */
 export const getAllClassesForEnrolledUnits = async (req, res) => {
   try {
     const { studentId, year, semester } = req.params;

@@ -4,6 +4,10 @@ import mongoose from "mongoose";
 import { classTypeSchema } from "./classTypeSchema.js";
 
 const offeringSchema = new mongoose.Schema({
+  unitcode: {
+    type: String,
+    required: true,
+  },
   year: {
     type: Number,
     required: true,
