@@ -7,7 +7,7 @@ import "../css/Help.css";
 export default function Help() {
   const [faq, setFaq] = useState([
     { question: "How do I reset my password?", answer: "Go to settings and click on 'Reset Password'." },
-    { question: "Where can I find my timetable?", answer: "Your timetable is available in the 'Home' section." },
+    { question: "Where can I find my timetable?", answer: "Your timetable is available in the main section." },
     { 
       question: "How do I contact support?", 
       answer: <>You can contact <a href="https://www.monash.edu/students/support/connect" target="_blank" rel="noopener noreferrer">Monash Connect</a> for enquiries.</> 

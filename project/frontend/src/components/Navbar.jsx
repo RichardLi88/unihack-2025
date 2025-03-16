@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
 import { Text, Button, Menu, Flex, ActionIcon, Image } from "@mantine/core";
-import { useLocation } from "react-router-dom"; // Import useLocation
+import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate and useLocation
 import { IconHelpCircle, IconChevronDown } from "@tabler/icons-react";
 import { PageContext } from "../contexts/PageContext";
-import { useNavigate } from "react-router";
 import AllocateLogo from "../assets/allocate_logo.svg";
 
 function Navbar() {
@@ -11,20 +10,20 @@ function Navbar() {
   const [modeText, setModeText] = useState("UPDATE PREFERENCES");
   const { setEdit, setEditUnit } = useContext(PageContext);
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current route
 
   const handleEdit = () => {
     setEditUnit(-1);
     setEdit((e) => {
-      if (modeText == "UPDATE PREFERENCES") {
-        setModeText("SAVE CHANGES");
-      } else {
-        setModeText("UPDATE PREFERENCES");
-      }
+      setModeText(e ? "UPDATE PREFERENCES" : "SAVE CHANGES");
       return !e;
     });
   };
 
-  const location = useLocation(); // Get the current route
+  // Handle Logout (Navigate to Login Page)
+  const handleLogout = () => {
+    navigate("/login"); // Redirects to the login page
+  };
 
   // Define routes where the Navbar should be hidden
   const hiddenRoutes = ["/login", "/forgotpassword"];
@@ -41,34 +40,27 @@ function Navbar() {
       c="white"
       align="center"
       justify="space-between"
-      style={{ //fixed navbar position
+      style={{
         position: "sticky",
         top: 0,
         width: "100%",
         zIndex: 1000,
       }}
-    
-    
-      
     >
       <Button
         variant="transparent"
         color="white"
         size="lg"
         weight={500}
-        onClick={() => {
-          navigate("/");
-        }}
+        onClick={() => navigate("/")}
       >
         <Image src={AllocateLogo} h="150%" alt="Allocate++" />
       </Button>
 
       {/* Navbar Right Section */}
       <Flex gap="md" align="center">
-        <Button color="#ebebeb" onClick={handleEdit} >
-          <font color = "black">
-          {modeText}
-          </font>
+        <Button color="#ebebeb" onClick={handleEdit}>
+          <font color="black">{modeText}</font>
         </Button>
 
         {/* Semester Selection Dropdown */}
@@ -102,7 +94,8 @@ function Navbar() {
           <IconHelpCircle size={20} />
         </ActionIcon>
 
-        <Button variant="subtle" color="gray.0">
+        {/* Logout Button */}
+        <Button variant="subtle" color="gray.0" onClick={handleLogout}>
           Logout
         </Button>
       </Flex>
