@@ -32,7 +32,12 @@ export const getClassFromClassId = async (req, res) => {
       { $unwind: "$offerings.classTypes" },
       { $unwind: "$offerings.classTypes.classes" },
       { $match: { "offerings.classTypes.classes.class_id": classIdNum } },
-      { $project: { "offerings.classTypes.classes": 1, _id: 0 } },
+      {
+        $project: {
+          "offerings.classTypes.classes": 1,
+          "offerings.classTypes.duration": 1,
+        },
+      },
     ]);
 
     if (!result) {
@@ -44,6 +49,7 @@ export const getClassFromClassId = async (req, res) => {
 
     const resultClass = result[0].offerings.classTypes.classes;
     resultClass.unitcode = classId.substring(0, 4);
+    resultClass.duration = result[0].offerings.classTypes.duration;
 
     return res.status(200).json({ success: true, data: resultClass });
   } catch (err) {
