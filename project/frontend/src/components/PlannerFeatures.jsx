@@ -42,7 +42,7 @@ function PlannerFeatures() {
 
       <Flex direction="column" justify="flex-start" align="flex-start" w="90%">
         <Text size="sm" mb="xs" fz="md">
-          Max Hours in One Day:
+          Max Hours of Class Per Day:
         </Text>
         <Slider
           w="100%"
